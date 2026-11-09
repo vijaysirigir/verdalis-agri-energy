@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verdalis — Agriculture & Energy</title>
+<meta name="description" content="Verdalis is an integrated agriculture and renewable energy enterprise connecting farmers, markets, agricultural infrastructure, and biomass-to-fuel opportunities.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --field:#12271c;      /* deep field green */
+    --canopy:#1c3a2a;     /* secondary dark */
+    --canopy-2:#24492f;
+    --crop:#3a8055;       /* brand mid green */
+    --crop-bright:#4f9b6a;
+    --harvest:#cf9f3c;    /* single accent */
+    --harvest-soft:#e4c47a;
+    --paper:#f2f4ef;      /* cool paper */
+    --paper-2:#e9ece3;
+    --line:#d4dacd;
+    --ink:#182019;
+    --ink-soft:#44514a;
+    --mist:#8a978d;
+    --white:#ffffff;
+    --maxw:1220px;
+    --gutter:clamp(20px,5vw,64px);
+    --r:4px;
+    --shadow:0 18px 50px -24px rgba(12,34,22,.5);
+    --sans:'Archivo',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --serif:'Spectral',Georgia,'Times New Roman',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--sans);
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{font-family:var(--serif);font-weight:500;line-height:1.1;letter-spacing:-.01em;color:var(--field)}
+  h1{font-size:clamp(2.4rem,5.2vw,4.3rem);font-weight:400}
+  h2{font-size:clamp(1.9rem,3.6vw,2.9rem);font-weight:400}
+  h3{font-size:clamp(1.25rem,2vw,1.6rem)}
+  p{max-width:68ch}
+  a{color:inherit;text-decoration:none}
+  img,svg{display:block;max-width:100%}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter)}
+  .dark{background:var(--field);color:#dfe6dd}
+  .dark h1,.dark h2,.dark h3,.dark h4{color:#fff}
+  .canopy{background:var(--canopy);color:#dce7df}
+  .canopy h2,.canopy h3,.canopy h4{color:#fff}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;gap:.6em;
+    font-family:var(--sans);font-weight:600;font-size:.95rem;
+    padding:.85em 1.6em;border-radius:var(--r);border:1px solid transparent;
+    cursor:pointer;transition:background .2s,color .2s,border-color .2s,transform .15s;
+    line-height:1;
+  }
+  .btn svg{width:1.05em;height:1.05em}
+  .btn-primary{background:var(--harvest);color:var(--field);border-color:var(--harvest)}
+  .btn-primary:hover{background:var(--harvest-soft);transform:translateY(-1px)}
+  .btn-dark{background:var(--field);color:#fff;border-color:var(--field)}
+  .btn-dark:hover{background:var(--canopy-2)}
+  .btn-outline{background:transparent;color:var(--field);border-color:var(--line)}
+  .btn-outline:hover{border-color:var(--crop);color:var(--crop)}
+  .dark .btn-outline,.canopy .btn-outline{color:#fff;border-color:rgba(255,255,255,.35)}
+  .dark .btn-outline:hover,.canopy .btn-outline:hover{border-color:var(--harvest);color:var(--harvest-soft)}
+  .btn-ghost{padding:0;background:none;border:none;color:var(--crop);font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:.4em}
+  .btn-ghost .arw{transition:transform .2s}
+  .btn-ghost:hover .arw{transform:translateX(4px)}
+  .dark .btn-ghost,.canopy .btn-ghost{color:var(--harvest-soft)}
+
+  /* ---------- header ---------- */
+  header{position:sticky;top:0;z-index:100;background:rgba(242,244,239,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;height:74px}
+  .brand{display:flex;align-items:center;gap:.7rem;flex-shrink:0}
+  .brand .mark{width:38px;height:38px;flex-shrink:0}
+  .brand .word{font-family:var(--serif);font-weight:600;font-size:1.4rem;letter-spacing:.01em;color:var(--field);line-height:1}
+  .brand .sub{font-family:var(--sans);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--crop);font-weight:600;margin-top:3px}
+  .mainnav{display:flex;align-items:center;gap:.3rem;margin-left:auto}
+  .mainnav a,.mainnav button{
+    font-family:var(--sans);font-size:.92rem;font-weight:500;color:var(--ink-soft);
+    padding:.6em .8em;border:none;background:none;cursor:pointer;border-radius:var(--r);
+    display:inline-flex;align-items:center;gap:.35em;transition:color .18s,background .18s;white-space:nowrap;
+  }
+  .mainnav a:hover,.mainnav button:hover,.mainnav a.active,.mainnav button.active{color:var(--field);background:var(--paper-2)}
+  .mainnav .chev{width:9px;height:9px;transition:transform .2s}
+  .has-mega[aria-expanded="true"] .chev{transform:rotate(180deg)}
+  .nav-cta{margin-left:.5rem}
+  .burger{display:none;width:44px;height:44px;border:1px solid var(--line);background:var(--white);border-radius:var(--r);cursor:pointer;align-items:center;justify-content:center}
+  .burger svg{width:20px;height:20px}
+
+  /* ---------- mega menu ---------- */
+  .mega{
+    position:absolute;left:0;right:0;top:100%;background:var(--white);
+    border-bottom:1px solid var(--line);box-shadow:var(--shadow);
+    opacity:0;visibility:hidden;transform:translateY(-8px);transition:.22s;
+  }
+  .mega.open{opacity:1;visibility:visible;transform:translateY(0)}
+  .mega-inner{max-width:var(--maxw);margin:0 auto;padding:2.2rem var(--gutter) 2.4rem;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:.4rem 2rem}
+  .mega-lead{grid-column:1 / 2;grid-row:1 / span 4;padding-right:1.6rem;border-right:1px solid var(--line)}
+  .mega-lead h4{font-size:1.35rem;margin-bottom:.6rem}
+  .mega-lead p{font-size:.88rem;color:var(--ink-soft);margin-bottom:1.1rem}
+  .mega-item{display:flex;gap:.7rem;padding:.7rem;border-radius:var(--r);cursor:pointer;transition:background .16s;align-items:flex-start}
+  .mega-item:hover{background:var(--paper)}
+  .mega-item .ic{width:30px;height:30px;color:var(--crop);flex-shrink:0;margin-top:2px}
+  .mega-item h5{font-family:var(--sans);font-size:.9rem;font-weight:600;color:var(--field);margin-bottom:.15rem}
+  .mega-item span{font-size:.78rem;color:var(--mist);display:block;line-height:1.4}
+
+  /* ---------- page system ---------- */
+  .page{display:none}
+  .page.active{display:block;animation:pfade .4s ease}
+  @keyframes pfade{from{opacity:0}to{opacity:1}}
+
+  /* ---------- hero (home) ---------- */
+  .hero{position:relative;background:var(--field);color:#e6ede4;overflow:hidden}
+  .hero-grid{max-width:var(--maxw);margin:0 auto;padding:clamp(3.5rem,8vw,6rem) var(--gutter) clamp(4rem,9vw,7rem);display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center;position:relative;z-index:2}
+  .hero .eyebrow{display:inline-flex;align-items:center;gap:.6rem;font-size:.8rem;font-weight:600;letter-spacing:.04em;color:var(--harvest-soft);margin-bottom:1.5rem}
+  .hero .eyebrow::before{content:"";width:26px;height:1px;background:var(--harvest)}
+  .hero h1{color:#fff;margin-bottom:1.4rem}
+  .hero h1 em{font-style:normal;color:var(--harvest-soft)}
+  .hero-lede{font-size:clamp(1.02rem,1.5vw,1.2rem);color:#c3d0c4;max-width:46ch;margin-bottom:2.2rem}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:1rem}
+  .hero-art{position:relative}
+  .hero-bg{position:absolute;inset:0;z-index:1;opacity:.5}
+  .hero-stats{position:relative;z-index:2;background:var(--field);border-top:1px solid rgba(255,255,255,.12)}
+  .hero-stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;padding-block:2rem}
+  .stat .n{font-family:var(--serif);font-size:clamp(1.8rem,3vw,2.5rem);color:var(--harvest-soft);line-height:1}
+  .stat .l{font-size:.82rem;color:#9fb0a2;margin-top:.5rem;max-width:22ch}
+
+  /* ---------- photo treatments (photos overlay SVG fallbacks; both degrade gracefully) ---------- */
+  .hero--photo .hero-art{display:none}
+  .hero--photo .hero-bg{z-index:0}
+  .hero--photo .hero-grid{grid-template-columns:1fr;max-width:var(--maxw);position:relative;z-index:3}
+  .hero--photo .hero-copy{max-width:660px}
+  .hero-photo{position:absolute;inset:0;z-index:1;background-size:cover;background-position:center}
+  .hero-ovl{position:absolute;inset:0;z-index:2;background:linear-gradient(95deg,rgba(18,39,28,.95) 0%,rgba(18,39,28,.84) 42%,rgba(18,39,28,.52) 74%,rgba(18,39,28,.34) 100%),linear-gradient(0deg,rgba(18,39,28,.6),rgba(18,39,28,0) 55%)}
+  .division-photo{position:absolute;inset:0;z-index:1;background-size:cover;background-position:center;transition:transform .5s ease}
+  .division.has-photo:hover .division-photo{transform:scale(1.04)}
+  .division-tint{position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(18,39,28,.2) 0%,rgba(18,39,28,.55) 45%,rgba(18,39,28,.93) 100%)}
+  .photo-band{position:relative;border-radius:8px;overflow:hidden;margin-bottom:2.2rem;box-shadow:var(--shadow);background:linear-gradient(135deg,var(--canopy),var(--field))}
+  .photo-band img{width:100%;height:clamp(220px,34vw,380px);object-fit:cover;display:block}
+  .photo-band figcaption{position:absolute;left:0;right:0;bottom:0;padding:1.1rem 1.3rem;font-size:.82rem;color:#eafff0;background:linear-gradient(0deg,rgba(18,39,28,.92),rgba(18,39,28,0));z-index:2}
+
+  /* ---------- generic section ---------- */
+  .section{padding-block:clamp(3.5rem,7vw,6rem)}
+  .section-head{max-width:62ch;margin-bottom:2.8rem}
+  .section-head.center{margin-inline:auto;text-align:center}
+  .kicker{font-family:var(--sans);font-size:.82rem;font-weight:600;color:var(--crop);margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
+  .kicker::before{content:"";width:20px;height:2px;background:var(--harvest);display:inline-block}
+  .kicker.center{justify-content:center}
+  .dark .kicker,.canopy .kicker{color:var(--harvest-soft)}
+  .lead-p{font-size:1.12rem;color:var(--ink-soft);margin-top:.9rem}
+  .dark .lead-p,.canopy .lead-p{color:#c3d0c4}
+
+  /* ---------- division cards ---------- */
+  .divisions{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem}
+  .division{position:relative;border-radius:8px;overflow:hidden;min-height:430px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;padding:2.2rem}
+  .division .dart{position:absolute;inset:0;z-index:0}
+  .division-body{position:relative;z-index:2}
+  .division .tag{font-size:.78rem;font-weight:600;letter-spacing:.03em;color:var(--harvest-soft);margin-bottom:.8rem}
+  .division h3{color:#fff;font-size:1.7rem;margin-bottom:.8rem}
+  .division p{color:#dbe6dc;font-size:.98rem;margin-bottom:1.5rem;max-width:40ch}
+
+  /* ---------- feature grid ---------- */
+  .fgrid{display:grid;gap:1.4rem}
+  .fgrid.c3{grid-template-columns:repeat(3,1fr)}
+  .fgrid.c2{grid-template-columns:repeat(2,1fr)}
+  .fcard{background:var(--white);border:1px solid var(--line);border-radius:6px;padding:1.8rem;transition:border-color .2s,transform .2s}
+  .fcard:hover{border-color:var(--crop);transform:translateY(-3px)}
+  .fcard .ic{width:40px;height:40px;color:var(--crop);margin-bottom:1.1rem}
+  .fcard h3{font-size:1.2rem;margin-bottom:.6rem}
+  .fcard h4{font-family:var(--sans);font-weight:600;font-size:1.05rem;margin-bottom:.5rem;color:var(--field)}
+  .fcard p{font-size:.92rem;color:var(--ink-soft)}
+  .dark .fcard,.canopy .fcard{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12)}
+  .dark .fcard p,.canopy .fcard p{color:#b9c7bb}
+  .dark .fcard .ic,.canopy .fcard .ic{color:var(--harvest-soft)}
+
+  /* ---------- eco strip ---------- */
+  .eco{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .eco-item{background:var(--white);padding:1.6rem}
+  .eco-item .ic{width:34px;height:34px;color:var(--crop);margin-bottom:.9rem}
+  .eco-item h4{font-family:var(--sans);font-weight:600;font-size:1rem;color:var(--field);margin-bottom:.4rem}
+  .eco-item p{font-size:.85rem;color:var(--ink-soft)}
+
+  /* ---------- split ---------- */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+  .split.reverse .split-art{order:2}
+  .split-art{border-radius:8px;overflow:hidden;background:var(--canopy)}
+  .split ul.ticks{list-style:none;margin-top:1.4rem;display:grid;gap:.7rem}
+  ul.ticks li{display:flex;gap:.7rem;font-size:.95rem;color:var(--ink-soft)}
+  ul.ticks li::before{content:"";width:18px;height:18px;flex-shrink:0;margin-top:2px;background:var(--harvest);border-radius:50%;
+    -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/%3E%3C/svg%3E") center/70% no-repeat;
+    mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/%3E%3C/svg%3E") center/70% no-repeat}
+  .dark ul.ticks li,.canopy ul.ticks li{color:#c3d0c4}
+
+  /* ---------- page banner ---------- */
+  .pbanner{background:var(--field);color:#e6ede4;position:relative;overflow:hidden}
+  .pbanner-inner{max-width:var(--maxw);margin:0 auto;padding:clamp(3rem,6vw,4.6rem) var(--gutter);position:relative;z-index:2}
+  .pbanner .crumbs{font-size:.82rem;color:var(--harvest-soft);margin-bottom:1.1rem;font-weight:500}
+  .pbanner h1{color:#fff;max-width:18ch;margin-bottom:1.1rem}
+  .pbanner p{color:#c3d0c4;font-size:1.1rem;max-width:56ch}
+  .pbanner-bg{position:absolute;inset:0;z-index:1;opacity:.4}
+
+  /* ---------- service detail ---------- */
+  .svc{scroll-margin-top:90px;padding-block:clamp(2.6rem,5vw,4rem);border-bottom:1px solid var(--line)}
+  .svc-top{display:grid;grid-template-columns:auto 1fr;gap:1.4rem;align-items:start;margin-bottom:1.6rem}
+  .svc-num{font-family:var(--serif);font-size:2.4rem;color:var(--harvest);line-height:1;font-weight:400}
+  .svc-ic{width:46px;height:46px;color:var(--crop)}
+  .svc h2{font-size:clamp(1.5rem,2.6vw,2.1rem)}
+  .svc .svc-sub{font-family:var(--serif);font-style:italic;font-size:1.15rem;color:var(--crop);margin-top:.3rem}
+  .svc-cols{display:grid;grid-template-columns:1.3fr 1fr;gap:2.4rem;margin-top:.5rem}
+  .svc-list{columns:2;column-gap:1.6rem;list-style:none;margin-top:1rem}
+  .svc-list li{font-size:.9rem;color:var(--ink-soft);padding:.3rem 0 .3rem 1.1rem;position:relative;break-inside:avoid}
+  .svc-list li::before{content:"";position:absolute;left:0;top:.75em;width:5px;height:5px;background:var(--harvest);border-radius:50%}
+  .svc-aside{background:var(--paper-2);border-radius:6px;padding:1.6rem;align-self:start}
+  .svc-aside h4{font-family:var(--sans);font-weight:600;font-size:.95rem;margin-bottom:.8rem;color:var(--field)}
+  .svc-aside .ben{display:flex;gap:.6rem;font-size:.86rem;color:var(--ink-soft);padding:.45rem 0;border-top:1px solid var(--line)}
+  .svc-aside .ben:first-of-type{border-top:none}
+  .svc-cta{margin-top:1.4rem}
+
+  /* ---------- process flow ---------- */
+  .flow{display:flex;flex-wrap:wrap;gap:.6rem;align-items:stretch;counter-reset:fl}
+  .flow-step{flex:1 1 150px;background:var(--white);border:1px solid var(--line);border-radius:6px;padding:1.2rem;position:relative;min-width:140px}
+  .dark .flow-step,.canopy .flow-step{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.14)}
+  .flow-step .s-n{font-family:var(--sans);font-weight:700;font-size:.72rem;letter-spacing:.08em;color:var(--harvest);margin-bottom:.6rem}
+  .flow-step h4{font-family:var(--sans);font-weight:600;font-size:.98rem;color:var(--field);margin-bottom:.4rem}
+  .dark .flow-step h4,.canopy .flow-step h4{color:#fff}
+  .flow-step p{font-size:.8rem;color:var(--ink-soft)}
+  .dark .flow-step p,.canopy .flow-step p{color:#b9c7bb}
+  .flow-step .ic{width:26px;height:26px;color:var(--crop);margin-bottom:.7rem}
+  .dark .flow-step .ic,.canopy .flow-step .ic{color:var(--harvest-soft)}
+  .flow-arrow{align-self:center;color:var(--harvest);flex:0 0 auto;display:flex;align-items:center}
+  .flow-arrow svg{width:20px;height:20px}
+
+  /* vertical pathway (methanol-to-jet) */
+  .pathway{max-width:620px;margin:0 auto;display:flex;flex-direction:column;gap:0}
+  .pw-node{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-radius:6px;padding:1rem 1.3rem;display:flex;align-items:center;gap:1rem}
+  .pw-node .pw-ic{width:30px;height:30px;color:var(--harvest-soft);flex-shrink:0}
+  .pw-node h4{font-family:var(--sans);font-weight:600;color:#fff;font-size:1rem}
+  .pw-node p{font-size:.82rem;color:#b9c7bb;margin-top:.1rem}
+  .pw-node.accent{background:var(--harvest);border-color:var(--harvest)}
+  .pw-node.accent h4{color:var(--field)}.pw-node.accent p{color:#4a3c14}.pw-node.accent .pw-ic{color:var(--field)}
+  .pw-link{height:26px;width:2px;background:linear-gradient(var(--harvest),var(--crop-bright));margin:0 auto}
+
+  /* ---------- notice ---------- */
+  .notice{border-left:3px solid var(--harvest);background:var(--paper-2);padding:1.2rem 1.4rem;border-radius:0 6px 6px 0;margin-top:1.6rem}
+  .notice.on-dark{background:rgba(207,159,60,.1)}
+  .notice h4{font-family:var(--sans);font-weight:600;font-size:.95rem;margin-bottom:.4rem;color:var(--field)}
+  .notice.on-dark h4{color:var(--harvest-soft)}
+  .notice p{font-size:.88rem;color:var(--ink-soft)}
+  .notice.on-dark p{color:#c3d0c4}
+
+  /* ---------- forms ---------- */
+  .form-card{background:var(--white);border:1px solid var(--line);border-radius:8px;padding:clamp(1.6rem,3vw,2.4rem)}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem 1.2rem}
+  .field{display:flex;flex-direction:column;gap:.35rem}
+  .field.full{grid-column:1 / -1}
+  .field label{font-size:.82rem;font-weight:600;color:var(--field)}
+  .field input,.field select,.field textarea{
+    font-family:var(--sans);font-size:.92rem;color:var(--ink);
+    padding:.7rem .8rem;border:1px solid var(--line);border-radius:var(--r);background:var(--paper);
+    transition:border-color .18s,box-shadow .18s;width:100%;
+  }
+  .field textarea{min-height:110px;resize:vertical}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--crop);box-shadow:0 0 0 3px rgba(58,128,85,.15);background:#fff}
+  .form-foot{display:flex;align-items:center;gap:1rem;margin-top:1.4rem;flex-wrap:wrap}
+  .form-note{font-size:.78rem;color:var(--mist)}
+  .form-success{display:none;background:rgba(58,128,85,.1);border:1px solid var(--crop);border-radius:6px;padding:1rem 1.2rem;margin-top:1.2rem;color:var(--canopy);font-size:.9rem;font-weight:500}
+  .form-success.show{display:block}
+  .form-tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.6rem}
+  .form-tab{font-family:var(--sans);font-size:.86rem;font-weight:600;padding:.6rem 1.1rem;border:1px solid var(--line);background:var(--white);border-radius:40px;cursor:pointer;color:var(--ink-soft);transition:.16s}
+  .form-tab:hover{border-color:var(--crop)}
+  .form-tab.active{background:var(--field);color:#fff;border-color:var(--field)}
+
+  /* ---------- contact cards ---------- */
+  .contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-bottom:2.4rem}
+  .contact-card{background:var(--white);border:1px solid var(--line);border-radius:6px;padding:1.5rem}
+  .contact-card .ic{width:30px;height:30px;color:var(--crop);margin-bottom:.9rem}
+  .contact-card h4{font-family:var(--sans);font-weight:600;font-size:1rem;margin-bottom:.3rem}
+  .contact-card p{font-size:.86rem;color:var(--ink-soft)}
+
+  /* ---------- CTA band ---------- */
+  .band{background:var(--canopy);color:#fff;border-radius:10px;padding:clamp(2.2rem,5vw,3.4rem);display:grid;grid-template-columns:1.4fr auto;gap:2rem;align-items:center;position:relative;overflow:hidden}
+  .band-bg{position:absolute;inset:0;z-index:0;opacity:.35}
+  .band>*{position:relative;z-index:2}
+  .band h2{color:#fff;margin-bottom:.6rem}
+  .band p{color:#c8d6cb;max-width:48ch}
+  .band-actions{display:flex;gap:1rem;flex-wrap:wrap}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--field);color:#aebcb0;padding-block:3.4rem 2rem;border-top:4px solid var(--harvest)}
+  .foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:2rem}
+  .foot-brand .word{font-family:var(--serif);font-weight:600;font-size:1.5rem;color:#fff}
+  .foot-brand p{font-size:.88rem;color:#8fa093;margin-top:1rem;max-width:34ch}
+  .foot-col h5{font-family:var(--sans);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--harvest-soft);margin-bottom:1rem;font-weight:600}
+  .foot-col a{display:block;font-size:.9rem;color:#aebcb0;padding:.28rem 0;transition:color .16s;cursor:pointer}
+  .foot-col a:hover{color:#fff}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,.1);margin-top:2.6rem;padding-top:1.4rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.8rem;color:#7d8f82}
+
+  /* ---------- mobile nav ---------- */
+  .mobile-nav{position:fixed;inset:0;z-index:200;background:var(--field);transform:translateX(100%);transition:transform .3s;overflow-y:auto;display:flex;flex-direction:column}
+  .mobile-nav.open{transform:translateX(0)}
+  .mobile-nav-head{display:flex;align-items:center;justify-content:space-between;padding:1.2rem var(--gutter);border-bottom:1px solid rgba(255,255,255,.12)}
+  .mobile-nav-head .word{font-family:var(--serif);font-weight:600;font-size:1.3rem;color:#fff}
+  .mobile-nav-close{width:44px;height:44px;border:1px solid rgba(255,255,255,.25);background:none;border-radius:var(--r);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .mobile-nav nav{padding:1rem var(--gutter) 2rem}
+  .mobile-nav nav a{display:block;font-family:var(--serif);font-size:1.4rem;color:#e6ede4;padding:.8rem 0;border-bottom:1px solid rgba(255,255,255,.08);cursor:pointer}
+  .mobile-nav nav a:hover{color:var(--harvest-soft)}
+  .mobile-nav .m-sub a{font-family:var(--sans);font-size:.95rem;padding:.5rem 0;color:#aebcb0;border:none}
+  .mobile-nav .m-sub{padding-left:.8rem;margin:.2rem 0 .6rem;border-left:2px solid var(--crop)}
+
+  /* ---------- utilities ---------- */
+  .mt-sm{margin-top:1rem}.mt-md{margin-top:2rem}.mt-lg{margin-top:3rem}
+  .center{text-align:center}
+  .muted{color:var(--ink-soft)}
+  .two-col-text{columns:2;column-gap:2.4rem}
+  .two-col-text p{margin-bottom:1rem}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:980px){
+    .mainnav,.nav-cta{display:none}
+    .burger{display:flex}
+    .hero-grid{grid-template-columns:1fr;gap:2rem}
+    .hero-art{min-height:260px}
+    .divisions{grid-template-columns:1fr}
+    .fgrid.c3{grid-template-columns:1fr 1fr}
+    .eco{grid-template-columns:1fr 1fr}
+    .split{grid-template-columns:1fr;gap:1.8rem}
+    .split.reverse .split-art{order:0}
+    .svc-cols{grid-template-columns:1fr}
+    .band{grid-template-columns:1fr}
+    .foot-grid{grid-template-columns:1fr 1fr}
+    .two-col-text{columns:1}
+    .hero-stats .wrap{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:620px){
+    .fgrid.c3,.fgrid.c2,.eco,.contact-grid,.form-grid{grid-template-columns:1fr}
+    .svc-list{columns:1}
+    .foot-grid{grid-template-columns:1fr}
+    .svc-top{grid-template-columns:1fr}
+    .hero-stats .wrap{grid-template-columns:1fr 1fr}
+    h1{font-size:2.2rem}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<!-- ============ SVG DEFS (reusable icons) ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M4 20C4 11 11 4 20 4c0 9-7 16-16 16Z"/><path fill="none" stroke="currentColor" stroke-width="1.6" d="M4 20C8 14 13 10 18 8"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M1 6h13v9H1zM14 9h4l3 3v3h-7z"/><circle cx="6" cy="18" r="2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="18" cy="18" r="2" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-land" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="m3 20 6-10 4 6 3-4 5 8z"/><circle cx="17" cy="6" r="2.4" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-seed" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M12 22V9"/><path fill="none" stroke="currentColor" stroke-width="1.6" d="M12 9C9 9 6 7 6 3c4 0 6 3 6 6Zm0 0c3 0 6-2 6-6-4 0-6 3-6 6Z"/></symbol>
+    <symbol id="i-recycle" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="m7 19-3-5 3-2M4 14l4-7 3 1M20 9l-3 5-3-2M17 14l-4 7H8M12 4l3 5"/></symbol>
+    <symbol id="i-tractor" viewBox="0 0 24 24"><circle cx="7" cy="16" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="18" cy="17" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path fill="none" stroke="currentColor" stroke-width="1.6" d="M3 12V7h6l2 5M11 12h7M18 14V9"/></symbol>
+    <symbol id="i-lab" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M9 3v6l-5 9a2 2 0 0 0 2 3h12a2 2 0 0 0 2-3l-5-9V3M8 3h8M7.5 15h9"/></symbol>
+    <symbol id="i-silo" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M6 8v13h12V8M6 8a6 3 0 0 1 12 0M6 12h12M6 16h12"/></symbol>
+    <symbol id="i-handshake" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="m3 9 4-3 5 4 5-4 4 3M3 9v6l5 4 2-2 3 2 4-3V9M12 10l-2 2"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M12 22c4 0 7-3 7-7 0-4-3-6-3-9-2 1-3 3-3 5-1-1-1-3-1-5-3 2-4 5-4 9 0 4 3 7 7 7Z"/></symbol>
+    <symbol id="i-plane" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M21 15 13 10V4a1 1 0 0 0-2 0v6l-8 5v2l8-2v3l-2 2v1l3-1 3 1v-1l-2-2v-3l8 2z"/></symbol>
+    <symbol id="i-molecule" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="19" cy="9" r="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="10" cy="18" r="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path fill="none" stroke="currentColor" stroke-width="1.6" d="M7 7 17 8.5M10.5 16 7.5 8M12 17l5-6"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path fill="none" stroke="currentColor" stroke-width="1.6" d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M12 3 5 6v6c0 4 3 7 7 9 4-2 7-5 7-9V6z"/><path fill="none" stroke="currentColor" stroke-width="1.6" d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M4 20h16M7 20v-6M12 20V8M17 20v-9"/></symbol>
+    <symbol id="i-store" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M4 9h16l-1-5H5zM4 9v11h16V9M4 9l1 2M20 9l-1 2M10 20v-5h4v5"/></symbol>
+    <symbol id="i-basket" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M5 9h14l-1.5 10h-11zM8 9 11 3M16 9 13 3M10 13v3M14 13v3"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path fill="none" stroke="currentColor" stroke-width="1.6" d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11Z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M12 22s7-7 7-12a7 7 0 0 0-14 0c0 5 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path fill="none" stroke="currentColor" stroke-width="1.6" d="m3 7 9 6 9-6"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M5 3h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2Z"/></symbol>
+  </defs>
+</svg>
+
+<!-- ============ HEADER ============ -->
+<header>
+  <div class="wrap nav">
+    <a class="brand" data-nav="home" href="#home" aria-label="Verdalis home">
+      <svg class="mark" viewBox="0 0 44 44" aria-hidden="true">
+        <circle cx="22" cy="22" r="21" fill="#12271c"/>
+        <path d="M11 29c5-1 9-1 14 0" fill="none" stroke="#3a8055" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M10 25c6-1.4 12-1.4 18 0" fill="none" stroke="#3a8055" stroke-width="1.6" stroke-linecap="round" opacity=".7"/>
+        <path d="M22 31V15" fill="none" stroke="#cf9f3c" stroke-width="2" stroke-linecap="round"/>
+        <path d="M22 18c-3 0-6-2-6-6 4 0 6 2.6 6 6Zm0-1c3 0 6-2 6-6-4 0-6 2.6-6 6Z" fill="#cf9f3c"/>
+        <circle cx="31" cy="14" r="2" fill="#e4c47a"/>
+      </svg>
+      <span>
+        <span class="word">Verdalis</span>
+        <span class="sub">Agriculture &amp; Energy</span>
+      </span>
+    </a>
+    <nav class="mainnav" aria-label="Primary">
+      <a data-nav="home" href="#home">Home</a>
+      <a data-nav="about" href="#about">About Us</a>
+      <button class="has-mega" id="megaBtn" aria-expanded="false" aria-haspopup="true">Agriculture &amp; Farmer Services
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <a data-nav="food-supply" href="#food-supply">Food Supply Chain</a>
+      <a data-nav="land" href="#land">Land &amp; Infrastructure</a>
+      <a data-nav="biomass" href="#biomass">Biomass &amp; Fuels</a>
+      <a data-nav="sustainability" href="#sustainability">Sustainability</a>
+    </nav>
+    <a class="btn btn-primary nav-cta" data-nav="contact" href="#contact">Contact Us</a>
+    <button class="burger" id="burger" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--field)" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+
+  <!-- MEGA MENU -->
+  <div class="mega" id="mega" role="menu" aria-label="Agriculture & Farmer Services">
+    <div class="mega-inner">
+      <div class="mega-lead">
+        <h4>Agriculture &amp; Farmer Services</h4>
+        <p>Integrated solutions that support farmers across the full agricultural lifecycle — land, inputs, machinery, agronomy, storage and market access.</p>
+        <a class="btn btn-dark" data-nav="agriculture" href="#agriculture">View all services</a>
+      </div>
+      <div class="mega-item" data-go="agriculture:svc-1"><svg class="ic"><use href="#i-truck"/></svg><div><h5>Food Supply Chain</h5><span>Farm production to global markets</span></div></div>
+      <div class="mega-item" data-go="agriculture:svc-2"><svg class="ic"><use href="#i-land"/></svg><div><h5>Agricultural Land Purchase</h5><span>Identify &amp; acquire farmland</span></div></div>
+      <div class="mega-item" data-go="agriculture:svc-3"><svg class="ic"><use href="#i-seed"/></svg><div><h5>Raw Materials &amp; Inputs</h5><span>Seeds, fertilizer, crop protection</span></div></div>
+      <div class="mega-item" data-go="agriculture:svc-4"><svg class="ic"><use href="#i-recycle"/></svg><div><h5>Agricultural By-products</h5><span>Residues into revenue</span></div></div>
+      <div class="mega-item" data-go="agriculture:svc-5"><svg class="ic"><use href="#i-tractor"/></svg><div><h5>Machinery Leasing</h5><span>Equipment without the capital</span></div></div>
+      <div class="mega-item" data-go="agriculture:svc-6"><svg class="ic"><use href="#i-lab"/></svg><div><h5>Agronomic Services</h5><span>Expertise for higher yield</span></div></div>
+      <div class="mega-item" data-go="agriculture:svc-7"><svg class="ic"><use href="#i-silo"/></svg><div><h5>Storage Services</h5><span>Protect produce, cut losses</span></div></div>
+      <div class="mega-item" data-go="agriculture:svc-8"><svg class="ic"><use href="#i-handshake"/></svg><div><h5>Integrated Support</h5><span>One partnership, every service</span></div></div>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-head">
+    <span class="word">Verdalis</span>
+    <button class="mobile-nav-close" id="mobileClose" aria-label="Close menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <nav>
+    <a data-nav="home" href="#home">Home</a>
+    <a data-nav="about" href="#about">About Us</a>
+    <a data-nav="agriculture" href="#agriculture">Agriculture &amp; Farmer Services</a>
+    <div class="m-sub">
+      <a data-go="agriculture:svc-1">Food Supply Chain</a>
+      <a data-go="agriculture:svc-2">Agricultural Land Purchase</a>
+      <a data-go="agriculture:svc-3">Raw Materials &amp; Inputs</a>
+      <a data-go="agriculture:svc-4">Agricultural By-products</a>
+      <a data-go="agriculture:svc-5">Machinery Leasing</a>
+      <a data-go="agriculture:svc-6">Agronomic Services</a>
+      <a data-go="agriculture:svc-7">Storage Services</a>
+      <a data-go="agriculture:svc-8">Integrated Support</a>
+    </div>
+    <a data-nav="food-supply" href="#food-supply">Food Supply Chain</a>
+    <a data-nav="land" href="#land">Land &amp; Infrastructure</a>
+    <a data-nav="biomass" href="#biomass">Biomass &amp; Sustainable Fuels</a>
+    <a data-nav="sustainability" href="#sustainability">Sustainability</a>
+    <a data-nav="contact" href="#contact">Contact Us</a>
+  </nav>
+</div>
+
+<main id="main">
+
+<!-- ================= HOME ================= -->
+<section class="page active" id="page-home">
+  <div class="hero hero--photo">
+    <div class="hero-photo" style="background-image:url('https://images.unsplash.com/photo-1703850827351-a1be4d85a095?auto=format&amp;fit=crop&amp;w=2000&amp;q=80')"></div>
+    <div class="hero-ovl"></div>
+    <svg class="hero-bg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <linearGradient id="hg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#1c3a2a"/><stop offset="1" stop-color="#12271c"/>
+        </linearGradient>
+      </defs>
+      <rect width="1200" height="600" fill="url(#hg)"/>
+      <g opacity=".55" fill="none" stroke="#3a8055" stroke-width="1.2">
+        <path d="M-50 480C250 440 450 500 750 460s400-10 550-40"/>
+        <path d="M-50 430C250 390 450 450 750 410s400-10 550-40"/>
+        <path d="M-50 380C250 340 450 400 750 360s400-10 550-40"/>
+        <path d="M-50 330C250 290 450 350 750 310s400-10 550-40"/>
+      </g>
+      <g opacity=".4" fill="none" stroke="#cf9f3c" stroke-width="1.2">
+        <path d="M-50 505C250 465 450 525 750 485s400-10 550-40"/>
+        <path d="M-50 355C250 315 450 375 750 335s400-10 550-40"/>
+      </g>
+      <g stroke="#cf9f3c" stroke-width="1.4" opacity=".6">
+        <line x1="930" y1="150" x2="1010" y2="110"/><line x1="1010" y1="110" x2="1080" y2="150"/>
+        <circle cx="930" cy="150" r="5" fill="#cf9f3c"/><circle cx="1010" cy="110" r="5" fill="#12271c"/><circle cx="1080" cy="150" r="5" fill="#cf9f3c"/>
+      </g>
+    </svg>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">Integrated agriculture &amp; renewable energy</span>
+        <h1>Growing Agriculture.<br>Connecting Markets.<br>Powering a <em>Sustainable</em> Future.</h1>
+        <p class="hero-lede">We bring together farmers, agricultural resources, food supply chains, and renewable energy opportunities to create a more efficient and sustainable agricultural ecosystem.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" data-nav="agriculture" href="#agriculture">Explore Our Services <svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn-outline" data-nav="biomass" href="#biomass">Our Renewable Energy Strategy</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <svg viewBox="0 0 520 440" aria-hidden="true">
+          <rect width="520" height="440" rx="10" fill="#0e1f16"/>
+          <!-- aerial field strips -->
+          <g>
+            <path d="M20 300 Q260 250 500 300 V420 H20 Z" fill="#24492f"/>
+            <path d="M20 320 Q260 275 500 320 V420 H20 Z" fill="#2f6342"/>
+            <path d="M20 345 Q260 305 500 345 V420 H20 Z" fill="#3a8055"/>
+            <path d="M20 375 Q260 340 500 375 V420 H20 Z" fill="#cf9f3c" opacity=".85"/>
+            <g stroke="#0e1f16" stroke-width="1" opacity=".3">
+              <path d="M90 260 Q120 320 90 420"/><path d="M180 250 Q200 330 180 420"/><path d="M270 248 Q280 330 270 420"/><path d="M360 252 Q350 330 360 420"/><path d="M440 258 Q420 330 440 420"/>
+            </g>
+          </g>
+          <!-- sun -->
+          <circle cx="420" cy="90" r="34" fill="#cf9f3c" opacity=".9"/>
+          <circle cx="420" cy="90" r="46" fill="none" stroke="#cf9f3c" stroke-width="1" opacity=".4"/>
+          <!-- flow line farm -> energy node -->
+          <path d="M60 210 C180 150 320 200 460 150" fill="none" stroke="#e4c47a" stroke-width="1.6" stroke-dasharray="4 5"/>
+          <!-- wind / energy motif -->
+          <g transform="translate(110,150)">
+            <rect x="-3" y="0" width="6" height="90" fill="#9fb0a2"/>
+            <circle cx="0" cy="0" r="5" fill="#fff"/>
+            <path d="M0 0 L2 -42 L-2 -42 Z" fill="#dfe6dd"/>
+            <path d="M0 0 L38 18 L36 22 Z" fill="#dfe6dd"/>
+            <path d="M0 0 L-36 22 L-38 18 Z" fill="#dfe6dd"/>
+          </g>
+          <!-- molecule / fuel node -->
+          <g transform="translate(430,170)" stroke="#e4c47a" stroke-width="1.4" fill="#0e1f16">
+            <line x1="0" y1="0" x2="34" y2="-14"/><line x1="0" y1="0" x2="18" y2="30"/>
+            <circle cx="0" cy="0" r="7" fill="#cf9f3c"/><circle cx="34" cy="-14" r="6"/><circle cx="18" cy="30" r="6"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="wrap">
+        <div class="stat"><div class="n">2</div><div class="l">Strategic business divisions working as one</div></div>
+        <div class="stat"><div class="n">8</div><div class="l">Integrated services across the farming lifecycle</div></div>
+        <div class="stat"><div class="n">Farm→Fuel</div><div class="l">A single connected agricultural value chain</div></div>
+        <div class="stat"><div class="n">SAF</div><div class="l">Long-term focus on sustainable aviation fuel</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIVISIONS -->
+  <div class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">Our business</div>
+        <h2>Two divisions, one integrated enterprise</h2>
+        <p class="lead-p">Verdalis connects agricultural production, farming infrastructure, food distribution and renewable energy — so value created on the farm flows all the way to global markets and future fuels.</p>
+      </div>
+      <div class="divisions">
+        <div class="division has-photo">
+          <div class="division-photo" style="background-image:url('https://images.unsplash.com/photo-1761839257961-4dce65b72d99?auto=format&amp;fit=crop&amp;w=1200&amp;q=80')"></div>
+          <div class="division-tint"></div>
+          <svg class="dart" viewBox="0 0 560 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="560" height="440" fill="#1c3a2a"/>
+            <path d="M0 300 Q280 250 560 300 V440 H0Z" fill="#24492f"/>
+            <path d="M0 340 Q280 300 560 340 V440 H0Z" fill="#2f6342"/>
+            <path d="M0 380 Q280 345 560 380 V440 H0Z" fill="#3a8055"/>
+            <g stroke="#12271c" stroke-width="1" opacity=".3"><path d="M120 280 Q130 360 120 440"/><path d="M260 272 Q268 360 260 440"/><path d="M400 278 Q392 360 400 440"/></g>
+            <circle cx="470" cy="90" r="30" fill="#cf9f3c" opacity=".85"/>
+          </svg>
+          <div class="division-body">
+            <div class="tag">Division 01</div>
+            <h3>Agriculture &amp; Farmer Services</h3>
+            <p>Providing integrated solutions that support farmers throughout the agricultural lifecycle, from land acquisition and farm inputs to harvesting, storage, and market access.</p>
+            <a class="btn btn-primary" data-nav="agriculture" href="#agriculture">Explore Agriculture Services <svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a>
+          </div>
+        </div>
+        <div class="division has-photo">
+          <div class="division-photo" style="background-image:url('https://images.unsplash.com/photo-1777195148867-68a6f0e9aa8f?auto=format&amp;fit=crop&amp;w=1200&amp;q=80')"></div>
+          <div class="division-tint"></div>
+          <svg class="dart" viewBox="0 0 560 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="560" height="440" fill="#13271d"/>
+            <path d="M0 330 Q280 290 560 330 V440 H0Z" fill="#1c3a2a"/>
+            <g stroke="#cf9f3c" stroke-width="1.4" fill="#13271d" opacity=".9">
+              <line x1="120" y1="150" x2="230" y2="120"/><line x1="230" y1="120" x2="330" y2="180"/><line x1="330" y1="180" x2="440" y2="130"/>
+              <circle cx="120" cy="150" r="8" fill="#cf9f3c"/><circle cx="230" cy="120" r="7"/><circle cx="330" cy="180" r="7" fill="#cf9f3c"/><circle cx="440" cy="130" r="7"/>
+            </g>
+            <path d="M60 360 C200 320 360 360 520 300" fill="none" stroke="#3a8055" stroke-width="1.4" stroke-dasharray="3 5"/>
+            <g transform="translate(470,370)" fill="#e4c47a" opacity=".9"><use href="#i-plane" width="40" height="40" x="-20" y="-20" color="#e4c47a"/></g>
+          </svg>
+          <div class="division-body">
+            <div class="tag">Division 02</div>
+            <h3>Renewable Fuels &amp; Energy</h3>
+            <p>Developing opportunities to convert sustainable biomass resources into methanol and advanced renewable fuels, supporting the transition towards lower-carbon aviation.</p>
+            <a class="btn btn-primary" data-nav="biomass" href="#biomass">Explore Renewable Fuels <svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ECOSYSTEM -->
+  <div class="section" style="background:var(--paper-2)">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">The Verdalis model</div>
+        <h2>Our integrated agricultural ecosystem</h2>
+        <p class="lead-p">Each service strengthens the next. Farmers gain access to inputs, equipment, expertise and markets through a single relationship — while agricultural residues feed a growing renewable-fuels value chain.</p>
+      </div>
+      <div class="eco">
+        <div class="eco-item"><svg class="ic"><use href="#i-seed"/></svg><h4>Grow</h4><p>Quality inputs, machinery and agronomy to help farmers produce more, more sustainably.</p></div>
+        <div class="eco-item"><svg class="ic"><use href="#i-silo"/></svg><h4>Store</h4><p>Warehousing, silos and cold storage that protect produce and reduce post-harvest losses.</p></div>
+        <div class="eco-item"><svg class="ic"><use href="#i-truck"/></svg><h4>Connect</h4><p>Aggregation and distribution linking farms to wholesalers, retailers and food processors.</p></div>
+        <div class="eco-item"><svg class="ic"><use href="#i-flame"/></svg><h4>Transform</h4><p>Agricultural residues channelled toward renewable methanol and sustainable fuels.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUPPORTING FARMERS + MARKETS split -->
+  <div class="section">
+    <div class="wrap">
+      <div class="split">
+        <div class="split-art">
+          <svg viewBox="0 0 520 400" aria-hidden="true">
+            <rect width="520" height="400" fill="#1c3a2a"/>
+            <g stroke="#3a8055" stroke-width="1.4" fill="none" opacity=".8">
+              <circle cx="260" cy="200" r="150"/><circle cx="260" cy="200" r="100"/><circle cx="260" cy="200" r="50"/>
+            </g>
+            <g fill="#cf9f3c"><circle cx="260" cy="200" r="9"/></g>
+            <g fill="#e4c47a">
+              <circle cx="110" cy="200" r="6"/><circle cx="410" cy="200" r="6"/><circle cx="185" cy="90" r="6"/><circle cx="335" cy="310" r="6"/><circle cx="335" cy="90" r="6"/><circle cx="185" cy="310" r="6"/>
+            </g>
+            <g stroke="#e4c47a" stroke-width="1" opacity=".5"><line x1="260" y1="200" x2="110" y2="200"/><line x1="260" y1="200" x2="410" y2="200"/><line x1="260" y1="200" x2="185" y2="90"/><line x1="260" y1="200" x2="335" y2="310"/><line x1="260" y1="200" x2="335" y2="90"/><line x1="260" y1="200" x2="185" y2="310"/></g>
+          </svg>
+        </div>
+        <div>
+          <div class="kicker">Supporting farmers at every stage</div>
+          <h2>From the first furrow to the final market</h2>
+          <p class="muted mt-sm">We work alongside farmers across the whole production cycle — removing capital barriers, improving productivity, and opening access to buyers that were previously out of reach.</p>
+          <ul class="ticks">
+            <li>Land acquisition and farm development support</li>
+            <li>Inputs, machinery leasing and agronomic expertise</li>
+            <li>Storage, logistics and reliable market connections</li>
+            <li>New revenue from agricultural by-products and biomass</li>
+          </ul>
+          <div class="mt-md"><a class="btn btn-dark" data-go="agriculture:svc-8" href="#agriculture">Become a Farmer Partner <svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FARMS TO MARKETS -->
+  <div class="section canopy">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">Connecting farms to global food markets</div>
+        <h2>A connected food supply chain</h2>
+        <p class="lead-p">We facilitate the movement of agricultural products through every stage — helping farmers reach larger markets while giving wholesalers and retailers a reliable supply.</p>
+      </div>
+      <div class="flow">
+        <div class="flow-step"><svg class="ic"><use href="#i-seed"/></svg><div class="s-n">01</div><h4>Farmers</h4><p>Cultivation and primary production.</p></div>
+        <div class="flow-arrow"><svg><use href="#i-arrow"/></svg></div>
+        <div class="flow-step"><svg class="ic"><use href="#i-truck"/></svg><div class="s-n">02</div><h4>Collection</h4><p>Aggregation from many farms.</p></div>
+        <div class="flow-arrow"><svg><use href="#i-arrow"/></svg></div>
+        <div class="flow-step"><svg class="ic"><use href="#i-gear"/></svg><div class="s-n">03</div><h4>Processing</h4><p>Cleaning, grading, packaging.</p></div>
+        <div class="flow-arrow"><svg><use href="#i-arrow"/></svg></div>
+        <div class="flow-step"><svg class="ic"><use href="#i-silo"/></svg><div class="s-n">04</div><h4>Warehousing</h4><p>Suitable storage facilities.</p></div>
+        <div class="flow-arrow"><svg><use href="#i-arrow"/></svg></div>
+        <div class="flow-step"><svg class="ic"><use href="#i-store"/></svg><div class="s-n">05</div><h4>Wholesalers</h4><p>Distribution to buyers.</p></div>
+        <div class="flow-arrow"><svg><use href="#i-arrow"/></svg></div>
+        <div class="flow-step"><svg class="ic"><use href="#i-basket"/></svg><div class="s-n">06</div><h4>Retailers</h4><p>Reaching consumers.</p></div>
+      </div>
+      <div class="mt-md"><a class="btn btn-outline" data-nav="food-supply" href="#food-supply">See the full supply chain</a></div>
+    </div>
+  </div>
+
+  <!-- INFRASTRUCTURE + BIOMASS teaser -->
+  <div class="section">
+    <div class="wrap">
+      <div class="fgrid c2">
+        <div class="fcard">
+          <svg class="ic"><use href="#i-chart"/></svg>
+          <h3>Agricultural infrastructure &amp; investment</h3>
+          <p class="muted">Opportunities in farmland, grain silos, warehousing, cold storage, processing facilities and biomass aggregation — for investors, landowners and operators seeking exposure to the agricultural value chain.</p>
+          <div class="mt-sm"><a class="btn-ghost" data-nav="land" href="#land">Explore land &amp; infrastructure <svg class="arw" width="16" height="16" viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a></div>
+        </div>
+        <div class="fcard">
+          <svg class="ic"><use href="#i-molecule"/></svg>
+          <h3>Advancing biomass-to-fuel technologies</h3>
+          <p class="muted">Transforming agricultural residues into renewable methanol — and, through the Methanol-to-Jet pathway, working toward the next generation of sustainable aviation fuel.</p>
+          <div class="mt-sm"><a class="btn-ghost" data-nav="biomass" href="#biomass">Explore biomass &amp; fuels <svg class="arw" width="16" height="16" viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUSTAINABILITY + PARTNERSHIPS -->
+  <div class="section" style="background:var(--paper-2)">
+    <div class="wrap">
+      <div class="split reverse">
+        <div class="split-art">
+          <svg viewBox="0 0 520 380" aria-hidden="true">
+            <rect width="520" height="380" fill="#12271c"/>
+            <g transform="translate(260,200)">
+              <path d="M0 0 C-60 -40 -60 -110 0 -150 C60 -110 60 -40 0 0Z" fill="#3a8055" opacity=".9"/>
+              <path d="M0 0 C-52 34 -120 34 -150 -10 C-96 -40 -40 -30 0 0Z" fill="#2f6342"/>
+              <path d="M0 0 C52 34 120 34 150 -10 C96 -40 40 -30 0 0Z" fill="#24492f"/>
+              <circle cx="0" cy="0" r="10" fill="#cf9f3c"/>
+              <path d="M0 0 L0 120" stroke="#cf9f3c" stroke-width="3"/>
+              <path d="M0 50 Q-30 30 -46 44 M0 80 Q30 62 46 76" stroke="#cf9f3c" stroke-width="2" fill="none"/>
+            </g>
+          </svg>
+        </div>
+        <div>
+          <div class="kicker">Sustainability &amp; environmental responsibility</div>
+          <h2>Value from what was once waste</h2>
+          <p class="muted mt-sm">Our model is built around resource efficiency — reducing post-harvest losses, utilising agricultural by-products, and developing biomass resources that create additional economic value for farmers.</p>
+          <ul class="ticks">
+            <li>Circular-economy approach to agricultural residues</li>
+            <li>Sustainable agriculture and responsible land management</li>
+            <li>Renewable fuel development from biomass feedstock</li>
+          </ul>
+          <div class="mt-md"><a class="btn btn-dark" data-nav="sustainability" href="#sustainability">Our approach to sustainability</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PARTNERSHIPS band -->
+  <div class="section">
+    <div class="wrap">
+      <div class="band">
+        <svg class="band-bg" viewBox="0 0 900 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <g fill="none" stroke="#3a8055" stroke-width="1.2" opacity=".6"><path d="M0 220 Q450 180 900 220"/><path d="M0 180 Q450 140 900 180"/><path d="M0 140 Q450 100 900 140"/></g>
+          <g fill="#cf9f3c" opacity=".5"><circle cx="760" cy="70" r="26"/></g>
+        </svg>
+        <div>
+          <div class="kicker">Strategic partnerships</div>
+          <h2>Let's build the agricultural economy of the future</h2>
+          <p>Whether you farm, invest, supply, buy, or develop technology, there's a role for you in the Verdalis ecosystem.</p>
+        </div>
+        <div class="band-actions">
+          <a class="btn btn-primary" data-nav="contact" href="#contact">Start a conversation <svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn-outline" data-nav="about" href="#about">About Verdalis</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="page" id="page-about">
+  <div class="pbanner">
+    <svg class="pbanner-bg" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g fill="none" stroke="#3a8055" stroke-width="1.2" opacity=".5"><path d="M0 300 Q600 250 1200 300"/><path d="M0 260 Q600 210 1200 260"/><path d="M0 220 Q600 170 1200 220"/></g>
+      <g stroke="#cf9f3c" stroke-width="1.4" opacity=".5"><line x1="950" y1="120" x2="1050" y2="90"/><circle cx="950" cy="120" r="5" fill="#cf9f3c"/><circle cx="1050" cy="90" r="5" fill="#cf9f3c"/></g>
+    </svg>
+    <div class="pbanner-inner">
+      <div class="crumbs">About Us</div>
+      <h1>Connecting agriculture, infrastructure, markets and energy</h1>
+      <p>Verdalis is an integrated agricultural and renewable energy enterprise, built to support farmers, strengthen food supply chains, and unlock the potential of biomass for renewable fuel production.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <div class="kicker">Who we are</div>
+          <h2>An enterprise built around connection</h2>
+          <div class="two-col-text mt-sm muted">
+            <p>Agriculture has always been a chain of dependencies — land, inputs, equipment, knowledge, storage and markets. When any link is weak, farmers lose value and food systems become less resilient.</p>
+            <p>Verdalis exists to strengthen every link and connect them into a single, coordinated ecosystem — and to extend that chain into renewable energy, where agricultural residues become the feedstock for the fuels of the future.</p>
+          </div>
+        </div>
+        <div class="split-art">
+          <img src="https://images.unsplash.com/photo-1559840691-824eade8cb76?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Aerial view of farmland with a river running through it" style="width:100%;height:100%;min-height:320px;object-fit:cover;display:block" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="background:var(--paper-2)">
+    <div class="wrap">
+      <div class="fgrid c2">
+        <div class="fcard"><svg class="ic"><use href="#i-globe"/></svg><h4>Our Vision</h4><p class="muted">To develop an integrated agricultural ecosystem that supports farmers, improves agricultural supply chains, creates opportunities for agricultural infrastructure investment, and unlocks the potential of biomass for renewable fuel production.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-leaf"/></svg><h4>Our Mission</h4><p class="muted">To connect farmers, resources, markets and energy opportunities through reliable services and long-term partnerships — improving productivity and profitability while using agricultural resources more efficiently.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-gear"/></svg><h4>Our Business Model</h4><p class="muted">Two complementary divisions: Agriculture &amp; Farmer Services, and Biomass-to-Fuel &amp; Sustainable Aviation Fuel development. Services are delivered through a single, integrated relationship so value compounds across the chain.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-chart"/></svg><h4>Our Strategic Priorities</h4><p class="muted">Strengthening farmer services, building agricultural infrastructure, deepening market access, and developing the biomass-to-methanol-to-SAF value chain through credible partnerships.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-recycle"/></svg><h4>Our Approach to Sustainability</h4><p class="muted">A circular-economy mindset: reduce post-harvest losses, put agricultural by-products to productive use, and develop renewable fuels — without overstating environmental outcomes.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-handshake"/></svg><h4>Our Partnerships</h4><p class="muted">We collaborate with farmers, landowners, suppliers, buyers, technology providers, energy companies and investors — each partnership adding capability to the ecosystem.</p></div>
+      </div>
+      <div class="notice"><h4>A note on how we present ourselves</h4><p>Verdalis is presented here as a corporate identity and business concept. We do not claim specific company history, financial results, operational sites, production capacity, certifications or existing partnerships that have not been established.</p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap"><div class="band">
+      <svg class="band-bg" viewBox="0 0 900 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g fill="none" stroke="#3a8055" stroke-width="1.2" opacity=".6"><path d="M0 220 Q450 180 900 220"/><path d="M0 180 Q450 140 900 180"/></g></svg>
+      <div><h2>Work with Verdalis</h2><p>Tell us where you sit in the agricultural value chain and we'll show you where you fit in the ecosystem.</p></div>
+      <div class="band-actions"><a class="btn btn-primary" data-nav="contact" href="#contact">Contact our team</a></div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ================= AGRICULTURE & FARMER SERVICES ================= -->
+<section class="page" id="page-agriculture">
+  <div class="pbanner">
+    <svg class="pbanner-bg" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g fill="none" stroke="#3a8055" stroke-width="1.2" opacity=".5"><path d="M0 300 Q600 250 1200 300"/><path d="M0 260 Q600 210 1200 260"/><path d="M0 220 Q600 170 1200 220"/></g>
+      <g fill="#cf9f3c" opacity=".4"><circle cx="1000" cy="110" r="30"/></g>
+    </svg>
+    <div class="pbanner-inner">
+      <div class="crumbs">Agriculture &amp; Farmer Services</div>
+      <h1>Everything a farm needs, through one partnership</h1>
+      <p>We support farmers across eight integrated service categories — from land and inputs to agronomy, storage and market access.</p>
+    </div>
+  </div>
+
+  <!-- service index -->
+  <div class="section" style="padding-bottom:1rem">
+    <div class="wrap">
+      <div class="fgrid c3" style="gap:.9rem">
+        <div class="fcard" data-go="agriculture:svc-1" style="cursor:pointer;padding:1.2rem"><svg class="ic" style="margin-bottom:.6rem"><use href="#i-truck"/></svg><h4 style="font-size:.98rem">01 — Food Supply Chain</h4></div>
+        <div class="fcard" data-go="agriculture:svc-2" style="cursor:pointer;padding:1.2rem"><svg class="ic" style="margin-bottom:.6rem"><use href="#i-land"/></svg><h4 style="font-size:.98rem">02 — Agricultural Land Purchase</h4></div>
+        <div class="fcard" data-go="agriculture:svc-3" style="cursor:pointer;padding:1.2rem"><svg class="ic" style="margin-bottom:.6rem"><use href="#i-seed"/></svg><h4 style="font-size:.98rem">03 — Raw Materials &amp; Inputs</h4></div>
+        <div class="fcard" data-go="agriculture:svc-4" style="cursor:pointer;padding:1.2rem"><svg class="ic" style="margin-bottom:.6rem"><use href="#i-recycle"/></svg><h4 style="font-size:.98rem">04 — Agricultural By-products</h4></div>
+        <div class="fcard" data-go="agriculture:svc-5" style="cursor:pointer;padding:1.2rem"><svg class="ic" style="margin-bottom:.6rem"><use href="#i-tractor"/></svg><h4 style="font-size:.98rem">05 — Machinery Leasing</h4></div>
+        <div class="fcard" data-go="agriculture:svc-6" style="cursor:pointer;padding:1.2rem"><svg class="ic" style="margin-bottom:.6rem"><use href="#i-lab"/></svg><h4 style="font-size:.98rem">06 — Agronomic Services</h4></div>
+        <div class="fcard" data-go="agriculture:svc-7" style="cursor:pointer;padding:1.2rem"><svg class="ic" style="margin-bottom:.6rem"><use href="#i-silo"/></svg><h4 style="font-size:.98rem">07 — Storage Services</h4></div>
+        <div class="fcard" data-go="agriculture:svc-8" style="cursor:pointer;padding:1.2rem"><svg class="ic" style="margin-bottom:.6rem"><use href="#i-handshake"/></svg><h4 style="font-size:.98rem">08 — Integrated Support</h4></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <!-- SVC 1 -->
+    <div class="svc" id="svc-1">
+      <div class="svc-top"><div class="svc-num">01</div><div><svg class="svc-ic"><use href="#i-truck"/></svg><h2>Food Supply Chain</h2><div class="svc-sub">Connecting Farm Production to Global Food Markets</div></div></div>
+      <div class="svc-cols">
+        <div>
+          <p class="muted">We facilitate the movement of agricultural products through the entire supply chain — helping farmers access larger markets while providing wholesalers and retailers with a reliable agricultural supply.</p>
+          <div class="flow mt-md">
+            <div class="flow-step"><div class="s-n">01</div><h4>Farmers</h4></div><div class="flow-arrow"><svg><use href="#i-arrow"/></svg></div>
+            <div class="flow-step"><div class="s-n">02</div><h4>Collection</h4></div><div class="flow-arrow"><svg><use href="#i-arrow"/></svg></div>
+            <div class="flow-step"><div class="s-n">03</div><h4>Processing &amp; Packaging</h4></div><div class="flow-arrow"><svg><use href="#i-arrow"/></svg></div>
+            <div class="flow-step"><div class="s-n">04</div><h4>Warehousing</h4></div>
+          </div>
+          <div class="flow mt-sm">
+            <div class="flow-step"><div class="s-n">05</div><h4>Wholesalers</h4></div><div class="flow-arrow"><svg><use href="#i-arrow"/></svg></div>
+            <div class="flow-step"><div class="s-n">06</div><h4>Retailers</h4></div><div class="flow-arrow"><svg><use href="#i-arrow"/></svg></div>
+            <div class="flow-step"><div class="s-n">07</div><h4>Consumers</h4></div>
+          </div>
+          <ul class="svc-list">
+            <li>Agricultural produce procurement</li><li>Farmer-to-market connections</li><li>Produce aggregation</li><li>Processing &amp; packaging partnerships</li><li>Wholesale distribution</li><li>Retail supply partnerships</li><li>Supply chain management</li><li>Market access &amp; price discovery</li>
+          </ul>
+        </div>
+        <aside class="svc-aside">
+          <h4>Benefits</h4>
+          <div class="ben"><svg width="18" height="18" style="color:var(--crop);flex-shrink:0"><use href="#i-arrow"/></svg>Larger markets for farmers' produce</div>
+          <div class="ben"><svg width="18" height="18" style="color:var(--crop);flex-shrink:0"><use href="#i-arrow"/></svg>Reliable supply for buyers</div>
+          <div class="ben"><svg width="18" height="18" style="color:var(--crop);flex-shrink:0"><use href="#i-arrow"/></svg>Transparent price discovery</div>
+          <div class="svc-cta"><a class="btn btn-dark" data-nav="food-supply" href="#food-supply">Explore the supply chain</a></div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- SVC 2 -->
+    <div class="svc" id="svc-2">
+      <div class="svc-top"><div class="svc-num">02</div><div><svg class="svc-ic"><use href="#i-land"/></svg><h2>Agricultural Land Purchase</h2><div class="svc-sub">Unlocking Opportunities in Agricultural Land</div></div></div>
+      <div class="svc-cols">
+        <div>
+          <p class="muted">We help farmers, investors and agricultural businesses identify and acquire suitable agricultural land — supported by suitability and productivity assessment at every step.</p>
+          <ul class="svc-list">
+            <li>Agricultural land identification</li><li>Land acquisition support</li><li>Land purchase facilitation</li><li>Farmland investment opportunities</li><li>Land suitability assessment</li><li>Soil &amp; productivity assessment</li><li>Farm expansion opportunities</li><li>Partnerships with landowners</li>
+          </ul>
+        </div>
+        <aside class="svc-aside">
+          <h4>Agricultural land enquiry</h4>
+          <form class="svc-form" data-form="Agricultural land enquiry">
+            <div class="field" style="margin-bottom:.7rem"><label>Full name</label><input required type="text" placeholder="Your name"></div>
+            <div class="field" style="margin-bottom:.7rem"><label>Email</label><input required type="email" placeholder="you@example.com"></div>
+            <div class="field" style="margin-bottom:.7rem"><label>Region of interest</label><input type="text" placeholder="Where are you looking?"></div>
+            <div class="field" style="margin-bottom:.7rem"><label>Land size / purpose</label><input type="text" placeholder="e.g. 50 ha, expansion"></div>
+            <button class="btn btn-primary" type="submit" style="width:100%;justify-content:center">Submit enquiry</button>
+            <div class="form-success">Thank you — your land enquiry has been received. Our team will be in touch.</div>
+          </form>
+        </aside>
+      </div>
+    </div>
+
+    <!-- SVC 3 -->
+    <div class="svc" id="svc-3">
+      <div class="svc-top"><div class="svc-num">03</div><div><svg class="svc-ic"><use href="#i-seed"/></svg><h2>Agricultural Raw Materials &amp; Farm Inputs</h2><div class="svc-sub">Everything Farmers Need to Grow</div></div></div>
+      <div class="svc-cols">
+        <div>
+          <p class="muted">Farmers can source quality agricultural inputs through our procurement and distribution network — consolidating demand to improve access and reliability.</p>
+          <ul class="svc-list">
+            <li>Seeds</li><li>Fertilizers</li><li>Organic fertilizers</li><li>Crop protection products</li><li>Pesticides &amp; herbicides</li><li>Soil conditioners</li><li>Irrigation supplies</li><li>Nutrients &amp; micronutrients</li><li>Agricultural consumables</li>
+          </ul>
+        </div>
+        <aside class="svc-aside">
+          <h4>Benefits</h4>
+          <div class="ben"><svg width="18" height="18" style="color:var(--crop);flex-shrink:0"><use href="#i-shield"/></svg>Quality-assured inputs</div>
+          <div class="ben"><svg width="18" height="18" style="color:var(--crop);flex-shrink:0"><use href="#i-globe"/></svg>Reliable distribution network</div>
+          <div class="ben"><svg width="18" height="18" style="color:var(--crop);flex-shrink:0"><use href="#i-chart"/></svg>Consolidated purchasing power</div>
+          <div class="svc-cta"><a class="btn btn-dark" data-nav="contact" href="#contact">Request input supply</a></div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- SVC 4 -->
+    <div class="svc" id="svc-4">
+      <div class="svc-top"><div class="svc-num">04</div><div><svg class="svc-ic"><use href="#i-recycle"/></svg><h2>Agricultural By-products</h2><div class="svc-sub">Turning Agricultural By-products into Economic Opportunities</div></div></div>
+      <div class="svc-cols">
+        <div>
+          <p class="muted">Agricultural by-products can be collected, processed, traded and converted into commercially valuable products — turning what was once waste into an additional revenue stream for farmers.</p>
+          <h4 style="font-family:var(--sans);font-size:.95rem;margin-top:1.2rem;color:var(--field)">By-products we work with</h4>
+          <ul class="svc-list"><li>Crop residues</li><li>Wheat straw</li><li>Rice husk</li><li>Corn stover</li><li>Sugarcane bagasse</li><li>Oilseed meal</li><li>Agricultural processing waste</li><li>Organic residues</li></ul>
+          <div class="notice"><h4>A circular approach</h4><p>By creating demand for residues, agricultural waste becomes an additional revenue opportunity — and a feedstock for our renewable fuels division.</p></div>
+        </div>
+        <aside class="svc-aside">
+          <h4>Potential applications</h4>
+          <div class="ben"><svg width="18" height="18" style="color:var(--crop);flex-shrink:0"><use href="#i-arrow"/></svg>Animal feed</div>
+          <div class="ben"><svg width="18" height="18" style="color:var(--crop);flex-shrink:0"><use href="#i-arrow"/></svg>Organic fertilizers</div>
+          <div class="ben"><svg width="18" height="18" style="color:var(--crop);flex-shrink:0"><use href="#i-arrow"/></svg>Biomass energy</div>
+          <div class="ben"><svg width="18" height="18" style="color:var(--crop);flex-shrink:0"><use href="#i-arrow"/></svg>Biofuel feedstock</div>
+          <div class="ben"><svg width="18" height="18" style="color:var(--crop);flex-shrink:0"><use href="#i-arrow"/></svg>Industrial raw materials</div>
+          <div class="svc-cta"><a class="btn btn-dark" data-nav="biomass" href="#biomass">See biomass &amp; fuels</a></div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- SVC 5 -->
+    <div class="svc" id="svc-5">
+      <div class="svc-top"><div class="svc-num">05</div><div><svg class="svc-ic"><use href="#i-tractor"/></svg><h2>Agricultural Machinery Leasing</h2><div class="svc-sub">Access Modern Farming Equipment Without Heavy Capital Investment</div></div></div>
+      <div class="svc-cols">
+        <div>
+          <p class="muted">Leasing and rental solutions reduce the upfront capital expenditure farmers face — giving access to modern equipment exactly when it's needed, season by season.</p>
+          <h4 style="font-family:var(--sans);font-size:.95rem;margin-top:1.2rem;color:var(--field)">Equipment categories</h4>
+          <ul class="svc-list"><li>Tractors</li><li>Combine harvesters</li><li>Seed drills</li><li>Planters</li><li>Sprayers</li><li>Balers</li><li>Tillage equipment</li><li>Irrigation machinery</li><li>Agricultural transport equipment</li></ul>
+        </div>
+        <aside class="svc-aside">
+          <h4>Leasing services</h4>
+          <div class="ben">Short-term equipment rentals</div>
+          <div class="ben">Long-term machinery leasing</div>
+          <div class="ben">Seasonal machinery access</div>
+          <div class="ben">Equipment maintenance partnerships</div>
+          <div class="ben">Machinery financing facilitation</div>
+          <div class="svc-cta"><a class="btn btn-dark" data-nav="contact" href="#contact">Enquire about leasing</a></div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- SVC 6 -->
+    <div class="svc" id="svc-6">
+      <div class="svc-top"><div class="svc-num">06</div><div><svg class="svc-ic"><use href="#i-lab"/></svg><h2>Agronomic Services</h2><div class="svc-sub">Improving Agricultural Productivity Through Expertise</div></div></div>
+      <div class="svc-cols">
+        <div>
+          <p class="muted">Agricultural specialists and technology help farmers improve productivity and profitability — from soil testing and crop planning to precision agriculture and yield optimization.</p>
+          <ul class="svc-list">
+            <li>Soil testing</li><li>Crop planning</li><li>Crop selection</li><li>Seed selection</li><li>Fertilizer management</li><li>Irrigation planning</li><li>Pest &amp; disease management</li><li>Precision agriculture</li><li>Yield optimization</li><li>Farm productivity assessments</li><li>Sustainable farming practices</li>
+          </ul>
+        </div>
+        <aside class="svc-aside">
+          <h4>Why it matters</h4>
+          <div class="ben"><svg width="18" height="18" style="color:var(--crop);flex-shrink:0"><use href="#i-chart"/></svg>Higher, more consistent yields</div>
+          <div class="ben"><svg width="18" height="18" style="color:var(--crop);flex-shrink:0"><use href="#i-drop"/></svg>Smarter input &amp; water use</div>
+          <div class="ben"><svg width="18" height="18" style="color:var(--crop);flex-shrink:0"><use href="#i-leaf"/></svg>More sustainable practices</div>
+          <div class="svc-cta"><a class="btn btn-dark" data-nav="contact" href="#contact">Talk to an agronomist</a></div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- SVC 7 -->
+    <div class="svc" id="svc-7">
+      <div class="svc-top"><div class="svc-num">07</div><div><svg class="svc-ic"><use href="#i-silo"/></svg><h2>Agricultural Storage Services</h2><div class="svc-sub">Protecting Agricultural Produce. Reducing Post-Harvest Losses.</div></div></div>
+      <div class="svc-cols">
+        <div>
+          <p class="muted">Suitable storage and warehousing protect produce quality and reduce food wastage — keeping value in the hands of farmers and buyers from harvest to market.</p>
+          <ul class="svc-list">
+            <li>Grain storage</li><li>Silos</li><li>Temperature-controlled storage</li><li>Cold storage</li><li>Agricultural warehouses</li><li>Produce aggregation facilities</li><li>Inventory management</li><li>Post-harvest handling</li><li>Storage &amp; distribution logistics</li>
+          </ul>
+        </div>
+        <aside class="svc-aside">
+          <h4>The impact</h4>
+          <div class="ben"><svg width="18" height="18" style="color:var(--crop);flex-shrink:0"><use href="#i-shield"/></svg>Less post-harvest loss</div>
+          <div class="ben"><svg width="18" height="18" style="color:var(--crop);flex-shrink:0"><use href="#i-silo"/></svg>Maintained produce quality</div>
+          <div class="ben"><svg width="18" height="18" style="color:var(--crop);flex-shrink:0"><use href="#i-truck"/></svg>Coordinated logistics</div>
+          <div class="svc-cta"><a class="btn btn-dark" data-nav="land" href="#land">See storage infrastructure</a></div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- SVC 8 -->
+    <div class="svc" id="svc-8" style="border-bottom:none">
+      <div class="svc-top"><div class="svc-num">08</div><div><svg class="svc-ic"><use href="#i-handshake"/></svg><h2>Additional Farmer Support &amp; Integrated Services</h2><div class="svc-sub">One Business Relationship, Every Service</div></div></div>
+      <div class="svc-cols">
+        <div>
+          <p class="muted">Farmers can access multiple services through a single business relationship with Verdalis — so the whole farming operation is supported end to end, without juggling a dozen suppliers.</p>
+          <div class="eco mt-md" style="grid-template-columns:1fr 1fr 1fr">
+            <div class="eco-item"><svg class="ic"><use href="#i-seed"/></svg><h4>Farm development</h4><p>Support to establish and grow the operation.</p></div>
+            <div class="eco-item"><svg class="ic"><use href="#i-truck"/></svg><h4>Procurement</h4><p>Agricultural inputs and supplies.</p></div>
+            <div class="eco-item"><svg class="ic"><use href="#i-tractor"/></svg><h4>Equipment access</h4><p>Machinery leasing and rental.</p></div>
+            <div class="eco-item"><svg class="ic"><use href="#i-store"/></svg><h4>Market connections</h4><p>Routes to wholesalers and retailers.</p></div>
+            <div class="eco-item"><svg class="ic"><use href="#i-silo"/></svg><h4>Storage &amp; logistics</h4><p>Warehousing and distribution.</p></div>
+            <div class="eco-item"><svg class="ic"><use href="#i-chart"/></svg><h4>Investment opportunities</h4><p>Agricultural infrastructure &amp; partnerships.</p></div>
+          </div>
+        </div>
+        <aside class="svc-aside">
+          <h4>Become a Farmer Partner</h4>
+          <p class="muted" style="font-size:.86rem;margin-bottom:1rem">Join the Verdalis ecosystem and access every service through one relationship.</p>
+          <form class="svc-form" data-form="Farmer Partner application">
+            <div class="field" style="margin-bottom:.7rem"><label>Name</label><input required type="text" placeholder="Your name"></div>
+            <div class="field" style="margin-bottom:.7rem"><label>Email</label><input required type="email" placeholder="you@example.com"></div>
+            <div class="field" style="margin-bottom:.7rem"><label>Farm location</label><input type="text" placeholder="Region / country"></div>
+            <button class="btn btn-primary" type="submit" style="width:100%;justify-content:center">Become a Farmer Partner</button>
+            <div class="form-success">Welcome aboard — we've received your application and will be in touch soon.</div>
+          </form>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOD SUPPLY CHAIN ================= -->
+<section class="page" id="page-food-supply">
+  <div class="pbanner">
+    <svg class="pbanner-bg" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g fill="none" stroke="#3a8055" stroke-width="1.2" opacity=".5"><path d="M0 300 Q600 250 1200 300"/><path d="M0 260 Q600 210 1200 260"/></g>
+      <g stroke="#cf9f3c" stroke-width="1.4" opacity=".5"><line x1="200" y1="120" x2="1000" y2="120" stroke-dasharray="6 8"/><circle cx="200" cy="120" r="6" fill="#cf9f3c"/><circle cx="1000" cy="120" r="6" fill="#cf9f3c"/></g>
+    </svg>
+    <div class="pbanner-inner">
+      <div class="crumbs">Food Supply Chain</div>
+      <h1>From Farm to Market: building a connected food supply chain</h1>
+      <p>Seven coordinated stages move agricultural products from the field to the consumer — reliably, transparently, and at scale.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap">
+      <div class="section-head"><div class="kicker">The journey of produce</div><h2>Seven stages, one continuous chain</h2></div>
+      <!-- interactive vertical stages -->
+      <div id="scStages" style="display:grid;gap:.7rem">
+        <div class="fcard sc-stage" style="cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:1.2rem;align-items:center;padding:1.3rem 1.6rem">
+          <div class="svc-num" style="font-size:1.8rem">1</div><div><h3 style="font-size:1.2rem">Farm Production</h3><p class="muted sc-desc" style="font-size:.9rem;margin-top:.3rem">Farmers cultivate crops and produce agricultural commodities.</p></div><svg class="ic" style="width:34px;height:34px;color:var(--crop)"><use href="#i-seed"/></svg>
+        </div>
+        <div class="fcard sc-stage" style="cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:1.2rem;align-items:center;padding:1.3rem 1.6rem">
+          <div class="svc-num" style="font-size:1.8rem">2</div><div><h3 style="font-size:1.2rem">Procurement &amp; Aggregation</h3><p class="muted sc-desc" style="font-size:.9rem;margin-top:.3rem">Agricultural products are collected from multiple farmers.</p></div><svg class="ic" style="width:34px;height:34px;color:var(--crop)"><use href="#i-truck"/></svg>
+        </div>
+        <div class="fcard sc-stage" style="cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:1.2rem;align-items:center;padding:1.3rem 1.6rem">
+          <div class="svc-num" style="font-size:1.8rem">3</div><div><h3 style="font-size:1.2rem">Processing</h3><p class="muted sc-desc" style="font-size:.9rem;margin-top:.3rem">Products are cleaned, graded, processed and packaged through operating partners.</p></div><svg class="ic" style="width:34px;height:34px;color:var(--crop)"><use href="#i-gear"/></svg>
+        </div>
+        <div class="fcard sc-stage" style="cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:1.2rem;align-items:center;padding:1.3rem 1.6rem">
+          <div class="svc-num" style="font-size:1.8rem">4</div><div><h3 style="font-size:1.2rem">Storage</h3><p class="muted sc-desc" style="font-size:.9rem;margin-top:.3rem">Agricultural produce is stored in suitable warehousing facilities.</p></div><svg class="ic" style="width:34px;height:34px;color:var(--crop)"><use href="#i-silo"/></svg>
+        </div>
+        <div class="fcard sc-stage" style="cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:1.2rem;align-items:center;padding:1.3rem 1.6rem">
+          <div class="svc-num" style="font-size:1.8rem">5</div><div><h3 style="font-size:1.2rem">Wholesale Distribution</h3><p class="muted sc-desc" style="font-size:.9rem;margin-top:.3rem">Products are supplied to food distributors and wholesale buyers.</p></div><svg class="ic" style="width:34px;height:34px;color:var(--crop)"><use href="#i-store"/></svg>
+        </div>
+        <div class="fcard sc-stage" style="cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:1.2rem;align-items:center;padding:1.3rem 1.6rem">
+          <div class="svc-num" style="font-size:1.8rem">6</div><div><h3 style="font-size:1.2rem">Retail Distribution</h3><p class="muted sc-desc" style="font-size:.9rem;margin-top:.3rem">Products reach supermarkets, grocery stores, food processors and institutional buyers.</p></div><svg class="ic" style="width:34px;height:34px;color:var(--crop)"><use href="#i-basket"/></svg>
+        </div>
+        <div class="fcard sc-stage" style="cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:1.2rem;align-items:center;padding:1.3rem 1.6rem">
+          <div class="svc-num" style="font-size:1.8rem">7</div><div><h3 style="font-size:1.2rem">End Consumers</h3><p class="muted sc-desc" style="font-size:.9rem;margin-top:.3rem">Agricultural products ultimately reach consumers.</p></div><svg class="ic" style="width:34px;height:34px;color:var(--crop)"><use href="#i-globe"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENQUIRY FORMS by category -->
+  <div class="section" style="background:var(--paper-2)">
+    <div class="wrap">
+      <div class="section-head"><div class="kicker">Work with us</div><h2>Supply chain enquiries</h2><p class="lead-p">Tell us where you fit in the chain and we'll route your enquiry to the right team.</p></div>
+      <div class="form-card">
+        <div class="form-tabs" id="scTabs">
+          <button class="form-tab active" data-tab="Farmer">Farmers</button>
+          <button class="form-tab" data-tab="Agricultural wholesaler">Agricultural wholesalers</button>
+          <button class="form-tab" data-tab="Food retailer">Food retailers</button>
+          <button class="form-tab" data-tab="Food processor">Food processors</button>
+          <button class="form-tab" data-tab="Institutional buyer">Institutional buyers</button>
+        </div>
+        <form class="svc-form" data-form="Food supply chain enquiry">
+          <div class="form-grid">
+            <div class="field"><label>I am enquiring as</label><input id="scRole" type="text" value="Farmer" readonly></div>
+            <div class="field"><label>Organisation (optional)</label><input type="text" placeholder="Company / farm name"></div>
+            <div class="field"><label>Full name</label><input required type="text" placeholder="Your name"></div>
+            <div class="field"><label>Email</label><input required type="email" placeholder="you@example.com"></div>
+            <div class="field"><label>Country / region</label><input type="text" placeholder="Where are you based?"></div>
+            <div class="field"><label>Product / commodity</label><input type="text" placeholder="What do you grow, buy or supply?"></div>
+            <div class="field full"><label>How can we help?</label><textarea placeholder="Tell us about your supply chain needs…"></textarea></div>
+          </div>
+          <div class="form-foot">
+            <button class="btn btn-primary" type="submit">Send enquiry <svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></button>
+            <span class="form-note">Demonstration form — submissions are not stored or sent.</span>
+          </div>
+          <div class="form-success">Thank you — your enquiry has been received. The relevant Verdalis team will follow up.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LAND & INFRASTRUCTURE ================= -->
+<section class="page" id="page-land">
+  <div class="pbanner">
+    <svg class="pbanner-bg" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path d="M0 320 Q300 270 600 300 T1200 290 V400 H0Z" fill="#1c3a2a"/>
+      <path d="M0 350 Q300 310 600 340 T1200 330 V400 H0Z" fill="#24492f"/>
+      <g stroke="#cf9f3c" stroke-width="1.4" opacity=".5"><line x1="950" y1="120" x2="1050" y2="95"/><circle cx="950" cy="120" r="5" fill="#cf9f3c"/></g>
+    </svg>
+    <div class="pbanner-inner">
+      <div class="crumbs">Land &amp; Agricultural Infrastructure</div>
+      <h1>Investing in the backbone of agriculture</h1>
+      <p>Farmland, storage, processing and biomass infrastructure — opportunities for investors, landowners, operators and strategic partners.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap">
+      <div class="section-head"><div class="kicker">Opportunities</div><h2>Agricultural investment &amp; infrastructure</h2></div>
+      <figure class="photo-band"><img src="https://images.unsplash.com/photo-1633900607959-005ab62e783d?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="Grain storage silos beside a cultivated field" loading="lazy"><figcaption>Grain storage and silos alongside cultivated farmland</figcaption></figure>
+      <div class="fgrid c3">
+        <div class="fcard"><svg class="ic"><use href="#i-land"/></svg><h3>Farmland acquisition</h3><p class="muted">Identifying and acquiring productive agricultural land for farming and investment.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-seed"/></svg><h3>Agricultural land development</h3><p class="muted">Developing land to raise its agricultural productivity and value.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-tractor"/></svg><h3>Farm infrastructure</h3><p class="muted">The on-farm infrastructure that underpins efficient, modern operations.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-silo"/></svg><h3>Grain silos</h3><p class="muted">Silo capacity for secure, large-scale grain storage.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-store"/></svg><h3>Warehousing</h3><p class="muted">Agricultural warehouses for aggregation and distribution.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-drop"/></svg><h3>Cold storage</h3><p class="muted">Temperature-controlled facilities to preserve perishable produce.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-gear"/></svg><h3>Processing facilities</h3><p class="muted">Facilities for cleaning, grading, processing and packaging.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-tractor"/></svg><h3>Equipment infrastructure</h3><p class="muted">Machinery and equipment infrastructure supporting farm operations.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-recycle"/></svg><h3>Biomass collection &amp; aggregation</h3><p class="muted">Infrastructure to collect and aggregate agricultural biomass at scale.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="background:var(--paper-2)">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <div class="kicker">Who we work with</div>
+          <h2>Opportunities across the ecosystem</h2>
+          <p class="muted mt-sm">Agricultural infrastructure is long-lived, essential, and central to our integrated model. We develop and structure opportunities for a range of partners.</p>
+          <ul class="ticks">
+            <li><strong>Investors</strong> — exposure to agricultural land and infrastructure</li>
+            <li><strong>Landowners</strong> — partnerships that put land to productive use</li>
+            <li><strong>Agricultural operators</strong> — access to facilities and capacity</li>
+            <li><strong>Strategic partners</strong> — co-development across the value chain</li>
+          </ul>
+          <div class="mt-md"><a class="btn btn-dark" data-nav="contact" href="#contact">Discuss an opportunity</a></div>
+        </div>
+        <div class="split-art">
+          <svg viewBox="0 0 500 380" aria-hidden="true">
+            <rect width="500" height="380" fill="#12271c"/>
+            <g fill="none" stroke="#3a8055" stroke-width="1.2" opacity=".6"><path d="M0 250 Q250 210 500 250"/><path d="M0 290 Q250 250 500 290"/></g>
+            <!-- silos + warehouse -->
+            <g fill="#24492f" stroke="#cf9f3c" stroke-width="1.4">
+              <rect x="80" y="160" width="46" height="120" rx="4"/><rect x="134" y="160" width="46" height="120" rx="4"/>
+              <path d="M80 160a23 10 0 0 1 46 0M134 160a23 10 0 0 1 46 0" fill="#cf9f3c"/>
+            </g>
+            <g fill="#1c3a2a" stroke="#cf9f3c" stroke-width="1.4"><path d="M230 200 L320 160 L410 200 V280 H230Z"/><path d="M230 200 L320 160 L410 200" fill="none"/></g>
+            <circle cx="420" cy="80" r="26" fill="#cf9f3c" opacity=".85"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BIOMASS & SUSTAINABLE FUELS ================= -->
+<section class="page" id="page-biomass">
+  <!-- hero -->
+  <div class="hero hero--photo">
+    <div class="hero-photo" style="background-image:url('https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?auto=format&amp;fit=crop&amp;w=2000&amp;q=80')"></div>
+    <div class="hero-ovl"></div>
+    <svg class="hero-bg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <rect width="1200" height="600" fill="#12271c"/>
+      <g opacity=".5" fill="none" stroke="#3a8055" stroke-width="1.2"><path d="M-50 470C250 430 450 490 750 450s400-10 550-40"/><path d="M-50 410C250 370 450 430 750 390s400-10 550-40"/></g>
+      <g stroke="#cf9f3c" stroke-width="1.4" opacity=".6" fill="#12271c">
+        <line x1="760" y1="160" x2="880" y2="130"/><line x1="880" y1="130" x2="980" y2="190"/><line x1="980" y1="190" x2="1090" y2="140"/>
+        <circle cx="760" cy="160" r="8" fill="#cf9f3c"/><circle cx="880" cy="130" r="7"/><circle cx="980" cy="190" r="7" fill="#cf9f3c"/><circle cx="1090" cy="140" r="7"/>
+      </g>
+      <g transform="translate(1000,420)" opacity=".5"><use href="#i-plane" width="80" height="80" x="-40" y="-40" color="#e4c47a"/></g>
+    </svg>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">Strategic Division 02 · Renewable Fuels &amp; Energy</span>
+        <h1>From Agricultural Biomass to the Future of <em>Sustainable Aviation</em>.</h1>
+        <p class="hero-lede">Transforming agricultural residues and sustainable biomass resources into renewable fuel opportunities through advanced conversion technologies.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#biomass:bio-strategy">Explore Our Biomass Strategy <svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn-outline" href="#biomass:bio-partners">Strategic Partnerships</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <svg viewBox="0 0 520 440" aria-hidden="true">
+          <rect width="520" height="440" rx="10" fill="#0e1f16"/>
+          <!-- biomass -> molecule -> plane vertical motif -->
+          <g transform="translate(90,70)">
+            <rect x="-4" y="0" width="60" height="70" rx="3" fill="#24492f" stroke="#cf9f3c" stroke-width="1.2"/>
+            <path d="M6 0 Q26 -24 46 0" fill="#3a8055"/>
+            <text x="26" y="44" font-size="10" fill="#e4c47a" text-anchor="middle" font-family="Archivo">BIOMASS</text>
+          </g>
+          <path d="M120 150 L220 210" stroke="#e4c47a" stroke-width="1.4" stroke-dasharray="4 5"/>
+          <g transform="translate(250,230)" stroke="#e4c47a" stroke-width="1.4" fill="#0e1f16">
+            <line x1="0" y1="0" x2="40" y2="-16"/><line x1="0" y1="0" x2="20" y2="34"/>
+            <circle cx="0" cy="0" r="9" fill="#cf9f3c"/><circle cx="40" cy="-16" r="7"/><circle cx="20" cy="34" r="7"/>
+            <text x="0" y="62" font-size="10" fill="#e4c47a" text-anchor="middle" font-family="Archivo">METHANOL</text>
+          </g>
+          <path d="M300 250 L390 320" stroke="#e4c47a" stroke-width="1.4" stroke-dasharray="4 5"/>
+          <g transform="translate(400,330)"><use href="#i-plane" width="60" height="60" x="-30" y="-30" color="#e4c47a"/><text x="0" y="44" font-size="10" fill="#e4c47a" text-anchor="middle" font-family="Archivo">SAF</text></g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section A: Feedstock -->
+  <div class="section" id="bio-strategy">
+    <div class="wrap">
+      <div class="section-head"><div class="kicker">Section A · Feedstock procurement</div><h2>Agricultural residues as valuable industrial feedstock</h2><p class="lead-p">Working with farmers and agricultural partners, we can establish reliable biomass supply networks — turning residues into the raw material for renewable fuel.</p></div>
+      <figure class="photo-band"><img src="https://images.unsplash.com/photo-1782768188936-10e9359c4d18?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="Round bales of crop residue in a harvested golden field" loading="lazy"><figcaption>Agricultural residues — a potential biomass feedstock for renewable fuel</figcaption></figure>
+      <div class="split">
+        <div>
+          <h3 style="margin-bottom:.8rem">Potential feedstocks</h3>
+          <ul class="svc-list" style="columns:2"><li>Wheat straw</li><li>Rice straw</li><li>Rice husk</li><li>Corn stover</li><li>Corn cobs</li><li>Sugarcane bagasse</li><li>Forestry residues</li><li>Other sustainably sourced biomass</li></ul>
+          <div class="notice"><h4>Partnering with farmers</h4><p>Reliable biomass supply depends on long-term relationships. We aim to work with agricultural producers and aggregators to build dependable feedstock networks.</p></div>
+        </div>
+        <div class="split-art" style="background:var(--paper-2)">
+          <div style="padding:1.6rem">
+            <h4 style="font-family:var(--sans);font-weight:600;margin-bottom:1.2rem;color:var(--field)">Feedstock supply chain</h4>
+            <div class="flow" style="flex-direction:column;align-items:stretch">
+              <div class="flow-step"><svg class="ic"><use href="#i-seed"/></svg><h4>Farmers</h4></div>
+              <div class="flow-arrow" style="transform:rotate(90deg);margin:-2px auto"><svg><use href="#i-arrow"/></svg></div>
+              <div class="flow-step"><svg class="ic"><use href="#i-recycle"/></svg><h4>Biomass collection</h4></div>
+              <div class="flow-arrow" style="transform:rotate(90deg);margin:-2px auto"><svg><use href="#i-arrow"/></svg></div>
+              <div class="flow-step"><svg class="ic"><use href="#i-truck"/></svg><h4>Aggregation &amp; transport</h4></div>
+              <div class="flow-arrow" style="transform:rotate(90deg);margin:-2px auto"><svg><use href="#i-arrow"/></svg></div>
+              <div class="flow-step"><svg class="ic"><use href="#i-gear"/></svg><h4>Pre-processing</h4></div>
+              <div class="flow-arrow" style="transform:rotate(90deg);margin:-2px auto"><svg><use href="#i-arrow"/></svg></div>
+              <div class="flow-step"><svg class="ic"><use href="#i-lab"/></svg><h4>Processing facility</h4></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section B: Biomass to Methanol -->
+  <div class="section dark">
+    <div class="wrap">
+      <div class="section-head"><div class="kicker">Section B · Biomass-to-methanol</div><h2>Converting agricultural biomass into renewable methanol</h2><p class="lead-p">A six-step technology pathway turns prepared biomass into purified methanol, ready for industrial applications and potential downstream fuel production.</p></div>
+      <figure class="photo-band"><img src="https://images.unsplash.com/photo-1693847173071-bd6237101335?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="Modern industrial process facility with tanks and pipework beside water" loading="lazy"><figcaption>Illustrative view of a modern process and storage facility</figcaption></figure>
+      <div class="flow">
+        <div class="flow-step"><svg class="ic"><use href="#i-recycle"/></svg><div class="s-n">STEP 01</div><h4>Biomass collection</h4><p>Agricultural residues sourced from farming and processing operations.</p></div>
+        <div class="flow-arrow"><svg><use href="#i-arrow"/></svg></div>
+        <div class="flow-step"><svg class="ic"><use href="#i-gear"/></svg><div class="s-n">STEP 02</div><h4>Pre-processing</h4><p>Biomass is dried, cleaned, shredded and prepared for conversion.</p></div>
+        <div class="flow-arrow"><svg><use href="#i-arrow"/></svg></div>
+        <div class="flow-step"><svg class="ic"><use href="#i-flame"/></svg><div class="s-n">STEP 03</div><h4>Gasification</h4><p>Biomass is converted into synthesis gas (syngas) — hydrogen, carbon monoxide and carbon dioxide.</p></div>
+        <div class="flow-arrow"><svg><use href="#i-arrow"/></svg></div>
+        <div class="flow-step"><svg class="ic"><use href="#i-drop"/></svg><div class="s-n">STEP 04</div><h4>Syngas conditioning</h4><p>Syngas is cleaned and adjusted to the composition required for synthesis.</p></div>
+        <div class="flow-arrow"><svg><use href="#i-arrow"/></svg></div>
+        <div class="flow-step"><svg class="ic"><use href="#i-molecule"/></svg><div class="s-n">STEP 05</div><h4>Methanol synthesis</h4><p>Conditioned syngas is processed through catalytic conversion to produce methanol.</p></div>
+        <div class="flow-arrow"><svg><use href="#i-arrow"/></svg></div>
+        <div class="flow-step"><svg class="ic"><use href="#i-lab"/></svg><div class="s-n">STEP 06</div><h4>Methanol purification</h4><p>Methanol is separated and purified for industrial and potential fuel applications.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section C: Methanol to SAF -->
+  <div class="section canopy">
+    <div class="wrap">
+      <div class="section-head"><div class="kicker">Section C · Methanol-to-Jet (MtJ)</div><h2>Developing the next generation of sustainable aviation fuel</h2><p class="lead-p">Renewable methanol can serve as an intermediate feedstock for producing synthetic aviation fuel through a Methanol-to-Jet conversion pathway.</p></div>
+      <figure class="photo-band"><img src="https://images.unsplash.com/photo-1545488286-6fe608f23485?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="Commercial passenger jet aircraft on an airport apron" loading="lazy"><figcaption>Sustainable aviation fuel — the long-term goal of the biomass-to-fuel value chain</figcaption></figure>
+      <div class="split">
+        <div class="pathway">
+          <div class="pw-node"><svg class="pw-ic"><use href="#i-recycle"/></svg><div><h4>Biomass feedstock</h4></div></div>
+          <div class="pw-link"></div>
+          <div class="pw-node"><svg class="pw-ic"><use href="#i-flame"/></svg><div><h4>Biomass gasification</h4></div></div>
+          <div class="pw-link"></div>
+          <div class="pw-node"><svg class="pw-ic"><use href="#i-drop"/></svg><div><h4>Syngas</h4></div></div>
+          <div class="pw-link"></div>
+          <div class="pw-node accent"><svg class="pw-ic"><use href="#i-molecule"/></svg><div><h4>Renewable methanol</h4><p>Intermediate feedstock</p></div></div>
+          <div class="pw-link"></div>
+          <div class="pw-node"><svg class="pw-ic"><use href="#i-gear"/></svg><div><h4>Methanol-to-hydrocarbons conversion</h4></div></div>
+          <div class="pw-link"></div>
+          <div class="pw-node"><svg class="pw-ic"><use href="#i-lab"/></svg><div><h4>Hydrocarbon upgrading</h4></div></div>
+          <div class="pw-link"></div>
+          <div class="pw-node"><svg class="pw-ic"><use href="#i-plane"/></svg><div><h4>Sustainable Aviation Fuel (SAF)</h4></div></div>
+        </div>
+        <div>
+          <h3 style="color:#fff">The conversion process</h3>
+          <ul class="ticks mt-sm">
+            <li>Methanol conversion</li><li>Hydrocarbon synthesis</li><li>Chain growth &amp; molecular upgrading</li><li>Refining &amp; fractionation</li><li>Fuel specification testing</li>
+          </ul>
+          <div class="notice on-dark"><h4>Important: methanol is not jet fuel</h4><p>Renewable methanol production is distinct from the subsequent conversion of methanol into aviation fuel. Methanol is not directly usable as conventional jet fuel — it serves as an intermediate feedstock that must be converted and upgraded through the Methanol-to-Jet pathway.</p></div>
+          <div class="notice on-dark"><h4>Certification &amp; compliance</h4><p>Bringing SAF to market depends on applicable aviation fuel certification, lifecycle greenhouse-gas assessment, and regulatory compliance. These are essential steps in any credible pathway to approved sustainable aviation fuel.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section D: Commercial opportunities -->
+  <div class="section">
+    <div class="wrap">
+      <div class="section-head"><div class="kicker">Section D · Commercial opportunities</div><h2>Opportunities across the biomass-to-fuel value chain</h2></div>
+      <div class="fgrid c3">
+        <div class="fcard"><svg class="ic"><use href="#i-recycle"/></svg><h4>Biomass feedstock procurement</h4><p class="muted">Sourcing agricultural residues at scale.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-handshake"/></svg><h4>Long-term farmer supply agreements</h4><p class="muted">Dependable, multi-season feedstock supply.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-silo"/></svg><h4>Biomass aggregation facilities</h4><p class="muted">Collection and aggregation infrastructure.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-molecule"/></svg><h4>Renewable methanol production</h4><p class="muted">Converting biomass into renewable methanol.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-chart"/></svg><h4>Methanol offtake agreements</h4><p class="muted">Commercial offtake for produced methanol.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-plane"/></svg><h4>Methanol-to-Jet partnerships</h4><p class="muted">Collaboration on the MtJ conversion pathway.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-flame"/></svg><h4>SAF production partnerships</h4><p class="muted">Developing sustainable aviation fuel capacity.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-truck"/></svg><h4>Renewable fuel distribution</h4><p class="muted">Moving renewable fuels to market.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-gear"/></svg><h4>Strategic infrastructure investment</h4><p class="muted">Capital for facilities across the chain.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section E: Strategic partnerships -->
+  <div class="section dark" id="bio-partners">
+    <div class="wrap">
+      <div class="section-head"><div class="kicker">Section E · Strategic partnerships</div><h2>Partner with us to develop sustainable fuel solutions</h2><p class="lead-p">The biomass-to-fuel value chain will be built through collaboration. We invite partners across the agricultural, technology, energy and aviation sectors.</p></div>
+      <div class="fgrid c3">
+        <div class="fcard"><svg class="ic"><use href="#i-seed"/></svg><h4>Agricultural producers</h4></div>
+        <div class="fcard"><svg class="ic"><use href="#i-recycle"/></svg><h4>Biomass aggregators</h4></div>
+        <div class="fcard"><svg class="ic"><use href="#i-gear"/></svg><h4>Technology providers</h4></div>
+        <div class="fcard"><svg class="ic"><use href="#i-flame"/></svg><h4>Gasification technology companies</h4></div>
+        <div class="fcard"><svg class="ic"><use href="#i-molecule"/></svg><h4>Methanol technology licensors</h4></div>
+        <div class="fcard"><svg class="ic"><use href="#i-drop"/></svg><h4>Renewable fuel developers</h4></div>
+        <div class="fcard"><svg class="ic"><use href="#i-plane"/></svg><h4>Airlines</h4></div>
+        <div class="fcard"><svg class="ic"><use href="#i-truck"/></svg><h4>Aviation fuel suppliers</h4></div>
+        <div class="fcard"><svg class="ic"><use href="#i-chart"/></svg><h4>Energy companies &amp; institutional investors</h4></div>
+      </div>
+      <div class="mt-lg"><a class="btn btn-primary" data-nav="contact" href="#contact">Partner With Us to Develop Sustainable Fuel Solutions <svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SUSTAINABILITY ================= -->
+<section class="page" id="page-sustainability">
+  <div class="pbanner">
+    <svg class="pbanner-bg" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g transform="translate(980,180)">
+        <path d="M0 0 C-50 -34 -50 -92 0 -126 C50 -92 50 -34 0 0Z" fill="#3a8055" opacity=".7"/>
+        <path d="M0 0 C-44 28 -100 28 -126 -8 C-80 -34 -34 -26 0 0Z" fill="#2f6342" opacity=".7"/>
+        <path d="M0 0 C44 28 100 28 126 -8 C80 -34 34 -26 0 0Z" fill="#24492f" opacity=".7"/>
+      </g>
+    </svg>
+    <div class="pbanner-inner">
+      <div class="crumbs">Sustainability</div>
+      <h1>Building a more sustainable agricultural and energy ecosystem</h1>
+      <p>Our model is built on resource efficiency — reducing losses, utilising by-products, and developing renewable fuels from biomass.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap">
+      <div class="section-head"><div class="kicker">Our themes</div><h2>Where sustainability lives in our business</h2></div>
+      <div class="fgrid c3">
+        <div class="fcard"><svg class="ic"><use href="#i-seed"/></svg><h3>Sustainable agriculture</h3><p class="muted">Supporting farming practices that sustain productivity over the long term.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-recycle"/></svg><h3>Agricultural waste utilization</h3><p class="muted">Putting residues and by-products to productive, commercial use.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-gear"/></svg><h3>Circular economy</h3><p class="muted">Designing value loops where outputs of one process feed another.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-flame"/></svg><h3>Biomass resource optimization</h3><p class="muted">Making efficient use of available biomass resources.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-molecule"/></svg><h3>Renewable fuel development</h3><p class="muted">Developing renewable fuels from agricultural feedstock.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-drop"/></svg><h3>Soil health</h3><p class="muted">Protecting the soil that underpins every harvest.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-land"/></svg><h3>Responsible land management</h3><p class="muted">Managing land in a considered, responsible way.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-silo"/></svg><h3>Reduced post-harvest losses</h3><p class="muted">Better storage and handling to keep more food in the system.</p></div>
+        <div class="fcard"><svg class="ic"><use href="#i-truck"/></svg><h3>Sustainable supply chains</h3><p class="muted">Coordinated chains that reduce waste and inefficiency.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="background:var(--paper-2)">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <div class="kicker">Value from by-products</div>
+          <h2>Economic value and resource efficiency, together</h2>
+          <p class="muted mt-sm">Agricultural by-products can generate additional economic value while supporting resource efficiency. By creating reliable demand for residues, we help farmers earn more from what they already produce — and channel biomass toward renewable fuel.</p>
+        </div>
+        <div>
+          <div class="notice"><h4>Responsible environmental claims</h4><p>We avoid unsupported environmental claims. Where carbon reduction or lifecycle outcomes are referenced, they should be backed by verified lifecycle data and applicable assessment — not assumed. Any figures would be published only when independently supported.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="page" id="page-contact">
+  <div class="pbanner">
+    <svg class="pbanner-bg" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g fill="none" stroke="#3a8055" stroke-width="1.2" opacity=".5"><path d="M0 300 Q600 250 1200 300"/><path d="M0 260 Q600 210 1200 260"/></g>
+      <g fill="#cf9f3c" opacity=".4"><circle cx="1000" cy="110" r="26"/></g>
+    </svg>
+    <div class="pbanner-inner">
+      <div class="crumbs">Contact Us</div>
+      <h1>Let's talk about where you fit in the ecosystem</h1>
+      <p>Choose an enquiry category and our team will route your message to the right people.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div class="contact-card"><svg class="ic"><use href="#i-mail"/></svg><h4>General enquiries</h4><p>hello@verdalis.example</p></div>
+        <div class="contact-card"><svg class="ic"><use href="#i-handshake"/></svg><h4>Partnerships</h4><p>partners@verdalis.example</p></div>
+        <div class="contact-card"><svg class="ic"><use href="#i-seed"/></svg><h4>Farmer services</h4><p>farmers@verdalis.example</p></div>
+      </div>
+
+      <div class="form-card">
+        <div class="section-head" style="margin-bottom:1.4rem"><h3>Business enquiry</h3><p class="muted">Tell us a little about you and what you're looking for.</p></div>
+        <form class="svc-form" data-form="Business enquiry">
+          <div class="form-grid">
+            <div class="field full"><label>I'm enquiring about</label>
+              <select required>
+                <option value="">Select a category…</option>
+                <option>Agriculture &amp; Farmer Services</option>
+                <option>Food Supply Chain — Farmer</option>
+                <option>Food Supply Chain — Wholesaler</option>
+                <option>Food Supply Chain — Retailer</option>
+                <option>Food Supply Chain — Food processor</option>
+                <option>Food Supply Chain — Institutional buyer</option>
+                <option>Agricultural Land Purchase</option>
+                <option>Farm Inputs &amp; Raw Materials</option>
+                <option>Agricultural By-products</option>
+                <option>Machinery Leasing</option>
+                <option>Agronomic Services</option>
+                <option>Storage Services</option>
+                <option>Land &amp; Infrastructure Investment</option>
+                <option>Biomass Feedstock Supply</option>
+                <option>Renewable Methanol / SAF Partnership</option>
+                <option>Media / Other</option>
+              </select>
+            </div>
+            <div class="field"><label>Full name</label><input required type="text" placeholder="Your name"></div>
+            <div class="field"><label>Email</label><input required type="email" placeholder="you@example.com"></div>
+            <div class="field"><label>Organisation</label><input type="text" placeholder="Company / farm name"></div>
+            <div class="field"><label>Country / region</label><input type="text" placeholder="Where are you based?"></div>
+            <div class="field full"><label>Your message</label><textarea placeholder="How can Verdalis help?"></textarea></div>
+          </div>
+          <div class="form-foot">
+            <button class="btn btn-primary" type="submit">Send enquiry <svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></button>
+            <span class="form-note">Demonstration form — submissions are not stored or sent.</span>
+          </div>
+          <div class="form-success">Thank you — your enquiry has been received. The relevant Verdalis team will be in touch.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <span class="word">Verdalis</span>
+        <p>An integrated agriculture and renewable energy enterprise — connecting farmers, markets, infrastructure and the fuels of the future.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Company</h5>
+        <a data-nav="about">About Us</a>
+        <a data-nav="sustainability">Sustainability</a>
+        <a data-nav="land">Land &amp; Infrastructure</a>
+        <a data-nav="contact">Contact Us</a>
+      </div>
+      <div class="foot-col">
+        <h5>Agriculture</h5>
+        <a data-go="agriculture:svc-1">Food Supply Chain</a>
+        <a data-go="agriculture:svc-3">Farm Inputs</a>
+        <a data-go="agriculture:svc-5">Machinery Leasing</a>
+        <a data-go="agriculture:svc-6">Agronomic Services</a>
+      </div>
+      <div class="foot-col">
+        <h5>Energy</h5>
+        <a data-nav="biomass">Biomass &amp; Fuels</a>
+        <a href="#biomass:bio-strategy">Feedstock Procurement</a>
+        <a href="#biomass:bio-partners">Strategic Partnerships</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Verdalis — Agriculture &amp; Energy. An original corporate identity and concept.</span>
+      <span>Growing Agriculture. Connecting Markets. Powering a Sustainable Future.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var pages = ["home","about","agriculture","food-supply","land","biomass","sustainability","contact"];
+  var mega = document.getElementById('mega');
+  var megaBtn = document.getElementById('megaBtn');
+  var mobileNav = document.getElementById('mobileNav');
+
+  function closeMega(){ mega.classList.remove('open'); megaBtn.setAttribute('aria-expanded','false'); }
+  function openMega(){ mega.classList.add('open'); megaBtn.setAttribute('aria-expanded','true'); }
+
+  function showPage(id, anchor){
+    if(pages.indexOf(id) === -1){ id = "home"; }
+    pages.forEach(function(p){
+      document.getElementById('page-'+p).classList.toggle('active', p===id);
+    });
+    // nav active state
+    document.querySelectorAll('.mainnav [data-nav]').forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('data-nav')===id);
+    });
+    megaBtn.classList.toggle('active', id==='agriculture');
+    closeMega();
+    mobileNav.classList.remove('open');
+    if(anchor){
+      var el = document.getElementById(anchor);
+      if(el){ setTimeout(function(){ el.scrollIntoView({behavior:'smooth', block:'start'}); }, 60); return; }
+    }
+    window.scrollTo({top:0, behavior:'auto'});
+  }
+
+  function route(){
+    var h = (location.hash || '#home').replace('#','');
+    var parts = h.split(':');
+    showPage(parts[0], parts[1]);
+  }
+
+  // delegate: data-nav and data-go
+  document.addEventListener('click', function(e){
+    var navEl = e.target.closest('[data-nav]');
+    var goEl = e.target.closest('[data-go]');
+    if(goEl){
+      e.preventDefault();
+      location.hash = goEl.getAttribute('data-go');
+      return;
+    }
+    if(navEl){
+      e.preventDefault();
+      location.hash = navEl.getAttribute('data-nav');
+      return;
+    }
+  });
+
+  window.addEventListener('hashchange', route);
+
+  // mega menu interactions
+  megaBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    if(mega.classList.contains('open')){ closeMega(); } else { openMega(); }
+  });
+  megaBtn.addEventListener('mouseenter', openMega);
+  var megaWrap = document.querySelector('header');
+  megaWrap.addEventListener('mouseleave', closeMega);
+  document.addEventListener('click', function(e){
+    if(!mega.contains(e.target) && e.target!==megaBtn){ closeMega(); }
+  });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ closeMega(); mobileNav.classList.remove('open'); } });
+
+  // mobile nav
+  document.getElementById('burger').addEventListener('click', function(){ mobileNav.classList.add('open'); });
+  document.getElementById('mobileClose').addEventListener('click', function(){ mobileNav.classList.remove('open'); });
+
+  // supply chain tabs
+  var scTabs = document.getElementById('scTabs');
+  if(scTabs){
+    scTabs.addEventListener('click', function(e){
+      var t = e.target.closest('.form-tab');
+      if(!t) return;
+      scTabs.querySelectorAll('.form-tab').forEach(function(b){ b.classList.remove('active'); });
+      t.classList.add('active');
+      var role = document.getElementById('scRole');
+      if(role){ role.value = t.getAttribute('data-tab'); }
+    });
+  }
+
+  // supply chain stage highlight
+  document.querySelectorAll('.sc-stage').forEach(function(s){
+    s.addEventListener('mouseenter', function(){ s.style.borderColor = 'var(--crop)'; });
+    s.addEventListener('mouseleave', function(){ s.style.borderColor = 'var(--line)'; });
+  });
+
+  // forms -> success message
+  document.addEventListener('submit', function(e){
+    var form = e.target.closest('.svc-form');
+    if(!form) return;
+    e.preventDefault();
+    var msg = form.querySelector('.form-success');
+    if(msg){ msg.classList.add('show'); }
+    form.querySelectorAll('input:not([readonly]), textarea, select').forEach(function(f){ if(f.type!=='submit') f.value=''; });
+    var role = document.getElementById('scRole');
+    if(role){ var active = document.querySelector('#scTabs .form-tab.active'); if(active) role.value = active.getAttribute('data-tab'); }
+    setTimeout(function(){ if(msg) msg.classList.remove('show'); }, 6000);
+  });
+
+  // initial route
+  route();
+})();
+</script>
+</body>
+</html>
