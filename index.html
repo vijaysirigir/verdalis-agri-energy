@@ -325,6 +325,7 @@
   .band h2{color:#fff;margin-bottom:.6rem}
   .band p{color:#c8d6cb;max-width:48ch}
   .band-actions{display:flex;gap:1rem;flex-wrap:wrap}
+  .band--stack{grid-template-columns:1fr;gap:1.5rem}
 
   /* ---------- footer ---------- */
   footer{background:var(--field);color:#aebcb0;padding-block:3.4rem 2rem;border-top:4px solid var(--harvest)}
@@ -1678,7 +1679,7 @@
 
   <!-- closing tagline -->
   <div class="section" style="padding-top:1rem">
-    <div class="wrap"><div class="band">
+    <div class="wrap"><div class="band band--stack">
       <svg class="band-bg" viewBox="0 0 900 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g fill="none" stroke="#3a8055" stroke-width="1.2" opacity=".6"><path d="M0 220 Q450 180 900 220"/><path d="M0 180 Q450 140 900 180"/></g></svg>
       <div><h2>Growing Together. Supplying Better. Building Canadian Agriculture.</h2><p>Join our growing network of agricultural partners.</p></div>
       <div class="band-actions"><a class="btn btn-primary" href="#grower:grower-apply">Register your interest <svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a></div>
