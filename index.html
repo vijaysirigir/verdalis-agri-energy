@@ -326,6 +326,13 @@
   .band p{color:#c8d6cb;max-width:48ch}
   .band-actions{display:flex;gap:1rem;flex-wrap:wrap}
   .band--stack{grid-template-columns:1fr;gap:1.5rem}
+  /* photographic page banners */
+  .pbanner-photo{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center}
+  .pbanner-ovl{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(18,39,28,.96) 0%,rgba(18,39,28,.82) 48%,rgba(18,39,28,.55) 100%),linear-gradient(0deg,rgba(18,39,28,.72),rgba(18,39,28,.15) 60%)}
+  /* photographic CTA bands */
+  .band--photo .band-bg{display:none}
+  .band--photo .band-photo{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center}
+  .band--photo .band-ovl{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(18,39,28,.92),rgba(18,39,28,.7) 60%,rgba(18,39,28,.5)),linear-gradient(0deg,rgba(18,39,28,.5),rgba(18,39,28,.12))}
 
   /* ---------- footer ---------- */
   footer{background:var(--field);color:#aebcb0;padding-block:3.4rem 2rem;border-top:4px solid var(--harvest)}
@@ -811,6 +818,8 @@
       <g fill="none" stroke="#3a8055" stroke-width="1.2" opacity=".5"><path d="M0 300 Q600 250 1200 300"/><path d="M0 260 Q600 210 1200 260"/><path d="M0 220 Q600 170 1200 220"/></g>
       <g stroke="#cf9f3c" stroke-width="1.4" opacity=".5"><line x1="950" y1="120" x2="1050" y2="90"/><circle cx="950" cy="120" r="5" fill="#cf9f3c"/><circle cx="1050" cy="90" r="5" fill="#cf9f3c"/></g>
     </svg>
+    <div class="pbanner-photo" style="background-image:url('https://images.unsplash.com/photo-1792740100500-14446a479931?auto=format&amp;fit=crop&amp;w=2000&amp;q=80')"></div>
+    <div class="pbanner-ovl"></div>
     <div class="pbanner-inner">
       <div class="crumbs">About Us</div>
       <h1>Connecting agriculture, infrastructure, markets and energy</h1>
@@ -851,7 +860,9 @@
   </div>
 
   <div class="section">
-    <div class="wrap"><div class="band">
+    <div class="wrap"><div class="band band--photo">
+      <div class="band-photo" style="background-image:url('https://images.unsplash.com/photo-1503639595033-c11290f0accf?auto=format&amp;fit=crop&amp;w=1800&amp;q=80')"></div>
+      <div class="band-ovl"></div>
       <svg class="band-bg" viewBox="0 0 900 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g fill="none" stroke="#3a8055" stroke-width="1.2" opacity=".6"><path d="M0 220 Q450 180 900 220"/><path d="M0 180 Q450 140 900 180"/></g></svg>
       <div><h2>Work with Red Rock Agricole</h2><p>Tell us where you sit in the agricultural value chain and we'll show you where you fit in the ecosystem.</p></div>
       <div class="band-actions"><a class="btn btn-primary" data-nav="contact" href="#contact">Contact our team</a></div>
@@ -1086,6 +1097,8 @@
       <g fill="none" stroke="#3a8055" stroke-width="1.2" opacity=".5"><path d="M0 300 Q600 250 1200 300"/><path d="M0 260 Q600 210 1200 260"/></g>
       <g stroke="#cf9f3c" stroke-width="1.4" opacity=".5"><line x1="200" y1="120" x2="1000" y2="120" stroke-dasharray="6 8"/><circle cx="200" cy="120" r="6" fill="#cf9f3c"/><circle cx="1000" cy="120" r="6" fill="#cf9f3c"/></g>
     </svg>
+    <div class="pbanner-photo" style="background-image:url('https://images.unsplash.com/photo-1506484381205-f7945653044d?auto=format&amp;fit=crop&amp;w=2000&amp;q=80')"></div>
+    <div class="pbanner-ovl"></div>
     <div class="pbanner-inner">
       <div class="crumbs">Food Supply Chain</div>
       <h1>From Farm to Market: building a connected food supply chain</h1>
@@ -1164,6 +1177,8 @@
       <path d="M0 350 Q300 310 600 340 T1200 330 V400 H0Z" fill="#24492f"/>
       <g stroke="#cf9f3c" stroke-width="1.4" opacity=".5"><line x1="950" y1="120" x2="1050" y2="95"/><circle cx="950" cy="120" r="5" fill="#cf9f3c"/></g>
     </svg>
+    <div class="pbanner-photo" style="background-image:url('https://images.unsplash.com/photo-1762068694647-b1d5bcc8a2cb?auto=format&amp;fit=crop&amp;w=2000&amp;q=80')"></div>
+    <div class="pbanner-ovl"></div>
     <div class="pbanner-inner">
       <div class="crumbs">Land &amp; Agricultural Infrastructure</div>
       <h1>Investing in the backbone of agriculture</h1>
@@ -1402,6 +1417,8 @@
         <path d="M0 0 C44 28 100 28 126 -8 C80 -34 34 -26 0 0Z" fill="#24492f" opacity=".7"/>
       </g>
     </svg>
+    <div class="pbanner-photo" style="background-image:url('https://images.unsplash.com/photo-1792968137263-c2d141fda7b2?auto=format&amp;fit=crop&amp;w=2000&amp;q=80')"></div>
+    <div class="pbanner-ovl"></div>
     <div class="pbanner-inner">
       <div class="crumbs">Sustainability</div>
       <h1>Building a more sustainable agricultural and energy ecosystem</h1>
@@ -1679,7 +1696,9 @@
 
   <!-- closing tagline -->
   <div class="section" style="padding-top:1rem">
-    <div class="wrap"><div class="band band--stack">
+    <div class="wrap"><div class="band band--stack band--photo">
+      <div class="band-photo" style="background-image:url('https://images.unsplash.com/photo-1567510534272-07e0f621b6d3?auto=format&amp;fit=crop&amp;w=1800&amp;q=80')"></div>
+      <div class="band-ovl"></div>
       <svg class="band-bg" viewBox="0 0 900 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g fill="none" stroke="#3a8055" stroke-width="1.2" opacity=".6"><path d="M0 220 Q450 180 900 220"/><path d="M0 180 Q450 140 900 180"/></g></svg>
       <div><h2>Growing Together. Supplying Better. Building Canadian Agriculture.</h2><p>Join our growing network of agricultural partners.</p></div>
       <div class="band-actions"><a class="btn btn-primary" href="#grower:grower-apply">Register your interest <svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></a></div>
@@ -1694,6 +1713,8 @@
       <g fill="none" stroke="#3a8055" stroke-width="1.2" opacity=".5"><path d="M0 300 Q600 250 1200 300"/><path d="M0 260 Q600 210 1200 260"/></g>
       <g fill="#cf9f3c" opacity=".4"><circle cx="1000" cy="110" r="26"/></g>
     </svg>
+    <div class="pbanner-photo" style="background-image:url('https://images.unsplash.com/photo-1772912139411-aafcd81783a9?auto=format&amp;fit=crop&amp;w=2000&amp;q=80')"></div>
+    <div class="pbanner-ovl"></div>
     <div class="pbanner-inner">
       <div class="crumbs">Contact Us</div>
       <h1>Let's talk about where you fit in the ecosystem</h1>
