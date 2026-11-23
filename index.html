@@ -171,7 +171,19 @@
   /* ---------- generic section ---------- */
   .section{padding-block:clamp(3.5rem,7vw,6rem)}
   .section-head{max-width:62ch;margin-bottom:2.8rem}
+  /* section headers that carry an intro paragraph span two columns so copy fills the width */
+  .section-head:has(.lead-p){max-width:none;display:grid;grid-template-columns:1.1fr 1fr;column-gap:3.2rem;row-gap:.4rem;align-items:start}
+  .section-head:has(.lead-p) .kicker{grid-column:1;grid-row:1}
+  .section-head:has(.lead-p) h2{grid-column:1;grid-row:2;margin:0}
+  .section-head:has(.lead-p) .lead-p{grid-column:2;grid-row:1 / span 2;margin-top:0;align-self:center;max-width:52ch}
   .section-head.center{margin-inline:auto;text-align:center}
+  .section-head.center:has(.lead-p){display:block;max-width:62ch}
+  .section-head.center:has(.lead-p) .lead-p{max-width:none;margin-top:.9rem}
+  @media(max-width:860px){
+    .section-head:has(.lead-p){display:block;max-width:none}
+    .section-head:has(.lead-p) h2{margin:0}
+    .section-head:has(.lead-p) .lead-p{margin-top:.9rem;max-width:none}
+  }
   .kicker{font-family:var(--sans);font-size:.82rem;font-weight:600;color:var(--crop);margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
   .kicker::before{content:"";width:20px;height:2px;background:var(--harvest);display:inline-block}
   .kicker.center{justify-content:center}
