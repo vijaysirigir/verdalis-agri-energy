@@ -113,6 +113,15 @@
   .mega-item h5{font-family:var(--sans);font-size:.9rem;font-weight:600;color:var(--field);margin-bottom:.15rem}
   .mega-item span{font-size:.78rem;color:var(--mist);display:block;line-height:1.4}
 
+  /* ---------- nav dropdown (grouped pages) ---------- */
+  .navdrop{position:relative;display:flex;align-items:center}
+  .navdrop-menu{position:absolute;top:100%;left:0;min-width:220px;background:var(--white);border:1px solid var(--line);border-radius:6px;box-shadow:var(--shadow);padding:.4rem;opacity:0;visibility:hidden;transform:translateY(-6px);transition:.18s;z-index:120}
+  .navdrop:hover .navdrop-menu,.navdrop:focus-within .navdrop-menu{opacity:1;visibility:visible;transform:translateY(0)}
+  .navdrop-menu a{display:block;padding:.6rem .75rem;border-radius:4px;font-size:.9rem;font-weight:500;color:var(--ink-soft);white-space:nowrap}
+  .navdrop-menu a:hover{background:var(--paper-2);color:var(--field)}
+  .navdrop:hover .chev,.navdrop:focus-within .chev{transform:rotate(180deg)}
+  .mobile-nav .m-group{display:block;font-family:var(--sans);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--harvest-soft);font-weight:600;padding:1.1rem 0 .1rem;border:none;cursor:default}
+
   /* ---------- page system ---------- */
   .page{display:none}
   .page.active{display:block;animation:pfade .4s ease}
@@ -446,8 +455,15 @@
       <button class="has-mega" id="megaBtn" aria-expanded="false" aria-haspopup="true">Agriculture &amp; Farmer Services
         <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
       </button>
-      <a data-nav="food-supply" href="#food-supply">Food Supply Chain</a>
-      <a data-nav="land" href="#land">Land &amp; Infrastructure</a>
+      <div class="navdrop">
+        <button class="navdrop-btn" id="miBtn" type="button" aria-haspopup="true">Markets &amp; Infrastructure
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="navdrop-menu" role="menu">
+          <a data-nav="food-supply" href="#food-supply">Food Supply Chain</a>
+          <a data-nav="land" href="#land">Land &amp; Infrastructure</a>
+        </div>
+      </div>
       <a data-nav="biomass" href="#biomass">Biomass &amp; Fuels</a>
       <a data-nav="sustainability" href="#sustainability">Sustainability</a>
     </nav>
@@ -498,8 +514,11 @@
       <a data-go="agriculture:svc-7">Storage Services</a>
       <a data-go="agriculture:svc-8">Integrated Support</a>
     </div>
-    <a data-nav="food-supply" href="#food-supply">Food Supply Chain</a>
-    <a data-nav="land" href="#land">Land &amp; Infrastructure</a>
+    <a class="m-group">Markets &amp; Infrastructure</a>
+    <div class="m-sub">
+      <a data-nav="food-supply" href="#food-supply">Food Supply Chain</a>
+      <a data-nav="land" href="#land">Land &amp; Infrastructure</a>
+    </div>
     <a data-nav="biomass" href="#biomass">Biomass &amp; Sustainable Fuels</a>
     <a data-nav="sustainability" href="#sustainability">Sustainability</a>
     <a data-nav="contact" href="#contact">Contact Us</a>
@@ -1102,7 +1121,7 @@
     <div class="pbanner-photo" style="background-image:url('https://images.unsplash.com/photo-1506484381205-f7945653044d?auto=format&amp;fit=crop&amp;w=2000&amp;q=80')"></div>
     <div class="pbanner-ovl"></div>
     <div class="pbanner-inner">
-      <div class="crumbs">Food Supply Chain</div>
+      <div class="crumbs">Markets &amp; Infrastructure · Food Supply Chain</div>
       <h1>From Farm to Market: building a connected food supply chain</h1>
       <p>Seven coordinated stages move agricultural products from the field to the consumer — reliably, transparently, and at scale.</p>
     </div>
@@ -1182,7 +1201,7 @@
     <div class="pbanner-photo" style="background-image:url('https://images.unsplash.com/photo-1762068694647-b1d5bcc8a2cb?auto=format&amp;fit=crop&amp;w=2000&amp;q=80')"></div>
     <div class="pbanner-ovl"></div>
     <div class="pbanner-inner">
-      <div class="crumbs">Land &amp; Agricultural Infrastructure</div>
+      <div class="crumbs">Markets &amp; Infrastructure · Land &amp; Agricultural Infrastructure</div>
       <h1>Investing in the backbone of agriculture</h1>
       <p>Farmland, storage, processing and biomass infrastructure — opportunities for investors, landowners, operators and strategic partners.</p>
     </div>
@@ -1835,6 +1854,8 @@
       a.classList.toggle('active', a.getAttribute('data-nav')===id);
     });
     megaBtn.classList.toggle('active', id==='agriculture');
+    var miBtn=document.getElementById('miBtn');
+    if(miBtn){ miBtn.classList.toggle('active', id==='food-supply'||id==='land'); }
     closeMega();
     mobileNav.classList.remove('open');
     if(anchor){
