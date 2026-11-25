@@ -345,6 +345,8 @@
   .band-actions{display:flex;gap:1rem;flex-wrap:wrap}
   .band .btn-outline{color:#fff;border-color:rgba(255,255,255,.45)}
   .band .btn-outline:hover{border-color:var(--harvest);color:var(--harvest-soft)}
+  .band--stack{text-align:center}
+  .band--stack .kicker{justify-content:center}
   .band--stack{grid-template-columns:1fr;gap:1.5rem}
   /* photographic page banners */
   .pbanner-photo{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center}
@@ -385,13 +387,14 @@
 
   /* ---------- responsive ---------- */
   @media(max-width:980px){
-    .mainnav,.nav-cta{display:none}
+    .mainnav,.nav-cta,.mega{display:none}
     .burger{display:flex}
     .hero-grid{grid-template-columns:1fr;gap:2rem}
     .hero-art{min-height:260px}
     .divisions{grid-template-columns:1fr}
+    .division{min-height:360px;padding:1.8rem}
     .fgrid.c3{grid-template-columns:1fr 1fr}
-    .eco{grid-template-columns:1fr 1fr}
+    .eco{grid-template-columns:1fr 1fr!important}
     .split{grid-template-columns:1fr;gap:1.8rem}
     .split.reverse .split-art{order:0}
     .svc-cols{grid-template-columns:1fr}
@@ -401,12 +404,21 @@
     .hero-stats .wrap{grid-template-columns:1fr 1fr}
   }
   @media(max-width:620px){
-    .fgrid.c3,.fgrid.c2,.eco,.contact-grid,.form-grid{grid-template-columns:1fr}
+    .fgrid.c3,.fgrid.c2,.contact-grid,.form-grid{grid-template-columns:1fr}
+    .eco{grid-template-columns:1fr!important}
     .svc-list{columns:1}
     .foot-grid{grid-template-columns:1fr}
     .svc-top{grid-template-columns:1fr}
     .hero-stats .wrap{grid-template-columns:1fr 1fr}
     h1{font-size:2.2rem}
+    /* stack the horizontal process flows vertically on phones */
+    .flow{flex-direction:column;align-items:stretch}
+    .flow-arrow{transform:rotate(90deg);margin:-2px auto}
+    /* 16px inputs stop iOS Safari zooming in on focus */
+    .field input,.field select,.field textarea{font-size:16px}
+    /* keep section padding comfortable, not cramped */
+    .band{padding:1.8rem 1.4rem}
+    .prog-card .prog-body{padding:1.3rem}
   }
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
